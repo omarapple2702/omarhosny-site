@@ -564,6 +564,109 @@ page('/404.html', {
   body: `<div class="wrap nf section"><div><h1>Page not found</h1><p class="lede">That address does not lead anywhere. The page you wanted does not exist, or it moved.</p><div class="actions"><a class="btn btn-primary" href="/">Return home</a><a class="btn" href="/projects/">Projects</a><a class="btn" href="/arcade/">Arcade</a><a class="btn" href="/random/">Random</a></div><p class="hint">The broken portal follows your pointer. Click it to repair it.</p></div><figure class="stage"><canvas data-scene="portal" role="img" aria-label="A broken ring portal showing 404. Click it to repair it. Decorative."></canvas></figure></div>`,
 });
 
+// ---------- Omar™ Legal ----------
+page('/omar-terms/', {
+  title: 'Omar™ Terms — Omar Hosny',
+  description: 'The official unofficial terms, policies and regulations governing communication with Omar™.',
+  crumbs: [['Omar™ Terms', '/omar-terms/']],
+  body: doc('Omar™ Terms', `Last updated ${POLICY_DATE}.`, `
+<p class="lede">Welcome to the official unofficial legal department of Omar™.</p>
+
+<p><strong>Important:</strong> This entire page is a joke. It is not intended to create an actual legal contract, company, employment relationship, financial obligation, or enforceable agreement.</p>
+
+<h2>1. Terms & Conditions</h2>
+<p>By sending a message to, replying to, mentioning, calling, or otherwise attempting to communicate with Omar, you acknowledge that these Terms may apply.</p>
+<ul>
+<li>Omar reserves the right to reply whenever he feels like it.</li>
+<li>If Omar says “nah”, the proposal has been rejected.</li>
+<li>If Omar says “wait”, the request has entered the Waiting™ state.</li>
+<li>If Omar announces that he is bored, the conversation may enter <strong>Boredom Mode™</strong>.</li>
+<li>Omar may change the subject without notice.</li>
+<li>“I’ll do it later” does not constitute a legally binding delivery date.</li>
+</ul>
+
+<h2>2. Privacy Policy</h2>
+<p>Omar respects your privacy, mainly because having random information about people is exhausting.</p>
+<p>Do not send passwords, payment information, private keys, or other sensitive information through ordinary messages unless you genuinely know what you are doing.</p>
+<p>Omar will not intentionally sell your personal information to random people on the internet.</p>
+
+<h2>3. Cookie Policy</h2>
+<p>Cookies may exist on websites Omar operates where technically necessary. Omar himself is not a cookie.</p>
+<p>This website's actual cookie and local-storage practices are described in the <a href="/cookies/">Cookies page</a>.</p>
+
+<h2>4. Acceptable Use Policy</h2>
+<p>You may communicate with Omar normally, respectfully, and without attempting to cause unnecessary chaos.</p>
+<p>You must not use Omar's websites, projects, accounts, infrastructure, or other services to:</p>
+<ul>
+<li>Attempt unauthorised access.</li>
+<li>Steal information.</li>
+<li>Distribute malware.</li>
+<li>Impersonate Omar.</li>
+<li>Intentionally damage services.</li>
+<li>Do anything that would reasonably result in Omar saying “what the hell”.</li>
+</ul>
+
+<h2>5. Refund & Cancellation Policy</h2>
+<p>There are currently no standard paid services covered by this document.</p>
+<p>Therefore, refunds are generally equivalent to the amount paid: <strong>£0.00 / $0.00 / €0.00 / whatever currency you somehow used.</strong></p>
+
+<h2>6. Service Level Agreement™</h2>
+<p>There is no guaranteed response time.</p>
+<ul>
+<li>Estimated response: anywhere between 4 seconds and 4 business days.</li>
+<li>Business days are defined by Omar™.</li>
+<li>Urgency does not automatically increase priority.</li>
+<li>“Bro answer me” is not an SLA escalation procedure.</li>
+</ul>
+
+<h2>7. Security Policy</h2>
+<p>Omar attempts to keep his websites and projects reasonably secure, including using appropriate access controls, secure deployment practices, and security-conscious development.</p>
+<p>If you discover a genuine security issue, please report it responsibly through the contact details on the <a href="/contact/">Contact page</a>.</p>
+
+<h2>8. GDPR-Style Data Rights</h2>
+<p>Where applicable, you may request information about personal data held by Omar, ask for inaccurate information to be corrected, or request deletion where reasonably possible.</p>
+<p>For privacy questions, contact <a href="mailto:privacy@omarhosny.work.gd">privacy@omarhosny.work.gd</a>.</p>
+
+<h2>9. Dispute Resolution</h2>
+<p>In the unlikely event of a dispute, the recommended procedure is:</p>
+<ol>
+<li>Talk about it.</li>
+<li>Clarify what happened.</li>
+<li>Attempt to reach a reasonable solution.</li>
+<li>Only then consider escalating the matter.</li>
+</ol>
+<p>Complaining loudly in the group chat is not considered formal arbitration.</p>
+
+<h2>10. Corporate Governance</h2>
+<p>The Omar™ organisation currently has a highly advanced corporate structure consisting primarily of:</p>
+<ul>
+<li>CEO: Omar</li>
+<li>CFO: Omar</li>
+<li>CTO: Omar</li>
+<li>Legal Department: This page</li>
+<li>HR Department: Not currently operational</li>
+<li>Customer Support: Omar</li>
+<li>Board of Directors: Also Omar</li>
+</ul>
+<p>The company has not yet appointed a CEO, CFO, legal department, HR department, customer support team, or anyone else.</p>
+
+<h2>11. Amendments</h2>
+<p>These terms may be updated whenever Omar decides they need updating.</p>
+<p>The latest version will be published on this page.</p>
+
+<h2>12. Severability</h2>
+<p>If one part of these Terms™ becomes invalid, the remaining sections shall continue to exist for comedic purposes.</p>
+
+<h2>13. Final Agreement</h2>
+<p>By continuing to read this page, you have successfully completed the entire Omar™ legal onboarding process.</p>
+
+<p><strong>Congratulations. There is absolutely no certificate.</strong></p>
+
+<h2>Official Disclaimer</h2>
+<p>This document is a joke and is not intended to create an actual legal contract. It should not be relied upon as legal, financial, corporate, privacy, security, or regulatory advice.</p>
+`),
+});
+
 // ---------- Layout ----------
 function layout(p) {
   const url = abs(p.path === '/404.html' ? '/' : p.path);
@@ -631,7 +734,7 @@ ${graph.length ? `<script type="application/ld+json">${JSON.stringify(graph.leng
     <nav aria-labelledby="f-proj"><h2 id="f-proj">Projects</h2><ul>${LIVE.map((x) => `<li><a href="/projects/${x.slug}/">${esc(x.name)}</a></li>`).join('')}<li><a href="/projects/omarlink/">OmarLink (soon)</a></li></ul></nav>
     <div><h2>Email</h2><ul><li><a href="mailto:${SITE.email}">${SITE.email}</a></li></ul></div>
   </div>
-  <div class="wrap"><div class="legal"><span>© ${new Date().getFullYear()} Omar Hosny</span><nav aria-label="Legal"><ul><li><a href="/privacy/">Privacy Policy</a></li><li><a href="/terms/">Terms</a></li><li><a href="/cookies/">Cookies</a></li></ul></nav><span class="legal-tools"><button type="button" class="link-btn" id="motion-toggle" aria-pressed="false">Motion: full</button><button type="button" class="link-btn" data-open-terminal>Terminal</button></span></div></div>
+  <div class="wrap"><div class="legal"><span>© ${new Date().getFullYear()} Omar Hosny</span><nav aria-label="Legal"><ul><li><a href="/privacy/">Privacy Policy</a></li><li><a href="/terms/">Terms</a></li><li><a href="/cookies/">Cookies</a></li><li><a href="/omar-terms/">Omar™ Terms</a></li></ul></nav><span class="legal-tools"><button type="button" class="link-btn" id="motion-toggle" aria-pressed="false">Motion: full</button><button type="button" class="link-btn" data-open-terminal>Terminal</button></span></div></div>
 </footer>
 <script type="application/json" id="site-data">${JSON.stringify(siteData).replace(/</g, '\\u003c')}</script>
 <script type="module" src="/js/core.js"></script>
