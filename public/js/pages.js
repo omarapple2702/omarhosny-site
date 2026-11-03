@@ -33,7 +33,7 @@ function random() {
 // ---- About: constellation ----
 function constellation() {
   const box = $('.const'), detail = $('#const-detail'); if (!box) return;
-  for (const n of $$('.cn', box)) { n.style.setProperty('--x', n.dataset.x); n.style.setProperty('--y', n.dataset.y); n.style.setProperty('--z', n.dataset.z); const show = () => { detail.textContent = n.dataset.text; $$('.cn', box).forEach((x) => x.setAttribute('aria-pressed', String(x === n))); }; n.addEventListener('click', show); n.addEventListener('focus', show); n.addEventListener('pointerenter', show); }
+  for (const n of $$('.cn', box)) { n.style.setProperty('--x', n.dataset.x); n.style.setProperty('--y', n.dataset.y); n.style.setProperty('--z', n.dataset.z); const show = () => { detail.textContent = n.dataset.text; const all = $$('.cn', box); all.forEach((x) => x.setAttribute('aria-pressed', String(x === n))); $$('.const-lines path', box).forEach((l, i) => l.classList.toggle('on', all[i + 1] === n)); }; n.addEventListener('click', show); n.addEventListener('focus', show); n.addEventListener('pointerenter', show); }
   if (!matchMedia('(hover: hover)').matches) return;
   box.addEventListener('pointermove', (e) => { if (motion.off) return; const r = box.getBoundingClientRect(); box.style.setProperty('--ry', (((e.clientX - r.left) / r.width - 0.5) * 14).toFixed(1) + 'deg'); box.style.setProperty('--rx', ((0.5 - (e.clientY - r.top) / r.height) * 10).toFixed(1) + 'deg'); });
   box.addEventListener('pointerleave', () => { box.style.setProperty('--ry', '0deg'); box.style.setProperty('--rx', '0deg'); });

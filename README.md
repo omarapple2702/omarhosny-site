@@ -2,9 +2,15 @@
 
 Static personal site for Omar Hosny. No framework, no dependencies, no build tooling beyond Node 18+.
 
+## Design system
+The whole look is driven by tokens at the top of `src/styles.css` (`:root`: `--bg`, `--surface`, `--accent`, `--fg`, `--line` and so on). Change them there to retune the site. `src/extra.css` holds the app styles (games, lab, terminal, 3D stages) and reads the same tokens.
+- Fonts are self-hosted in `public/fonts/` (Bricolage Grotesque and Inter) so the CSP and the privacy pages stay true. Nothing loads from Google.
+- The home hero is SVG and CSS (`BUDDY`, `RINGS`, `CHIPS` in `build.mjs`); `public/js/hero.js` moves the pupils with a mouse pointer.
+- Emails: `SITE.email` (contact@) is Omar's own address; `SITE.projectEmail` (project@) is for site support and updates. Both are in `src/data.mjs`.
+
 ## What is where
 - `build.mjs` generates every page. `src/data.mjs` holds project data. `src/styles.css` is the original base; `src/extra.css` is the interaction layer. Both are bundled into `dist/styles.css`.
-- `public/js/` holds the site scripts (ES modules, same-origin only, no libraries): `gfx.js` is a small Canvas 3D engine, `scenes.js` the 3D scenes (hero core, globe, lock, OmarLink, desk, Day Frame, network, 404 portal, Lab object, background), `arcade.js` the five games, `lab.js` the experiments, `pages.js` the Random, About, Contact and calculator behaviour, `core.js` the shared behaviour (menu, cursor, terminal, Easter eggs, motion switch).
+- `public/js/` holds the site scripts (ES modules, same-origin only, no libraries): `gfx.js` is a small Canvas 3D engine, `scenes.js` the 3D scenes (globe, lock, OmarLink, desk, Day Frame, network, interests orbit, 404 portal, Lab object), `arcade.js` the five games, `lab.js` the experiments, `pages.js` the Random, About, Contact and calculator behaviour, `core.js` the shared behaviour (menu, cursor, terminal, Easter eggs, motion switch).
 - `src/games.mjs` is the single source for Omar's eight existing games (URL, category, description, visual, what each page shows). Cards, the details dialog, the terminal, Random and the audit all read from it, so a URL lives in exactly one place.
 - `/interests/` and `/learning/` are built from the `INTERESTS` and `LEARN` arrays in `build.mjs`. Add an entry there and the cards, orbit, map and details all update.
 - Pages: `/arcade/` (now the Game Archive), `/interests/`, `/learning/`, `/lab/`, `/random/` and `/projects/omarlink/` are new or expanded. Every original route and URL is unchanged.

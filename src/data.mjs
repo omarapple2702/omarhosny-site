@@ -5,7 +5,8 @@
 export const SITE = {
   url: 'https://www.omarhosny.work.gd',
   name: 'Omar Hosny',
-  email: 'contact@omarhosny.work.gd', // linked from Omar Calc's and Dayframe's footers
+  email: 'contact@omarhosny.work.gd', // Omar's own contact address (creator). Linked from Omar Calc's and Dayframe's footers
+  projectEmail: 'project@omarhosny.work.gd', // support and updates for this website
   tagline: 'Websites, software and projects by Omar Hosny.',
 };
 
@@ -47,8 +48,8 @@ export const PROJECTS = [
     slug: 'omnidesk',
     name: 'OmniDesk',
     kind: 'Website',
-    status: 'dev',
-    statusLabel: 'In development',
+    status: 'live',
+    statusLabel: 'Live website',
     summary: 'A local browser desktop for files, notes, tasks, code and a little space to focus.',
     url: 'https://omnidesk.omarhosny-222.chatgpt.site/',
     urlLabel: 'Open OmniDesk website',
@@ -58,10 +59,9 @@ export const PROJECTS = [
       'OmniDesk is a desktop-style workspace that runs locally in your browser. It brings files, notes, tasks and code together, with room to focus.',
     features: ['Files', 'Notes', 'Tasks', 'Code', 'A little space to focus'],
     limits: [],
-    notes: ['The site currently identifies itself as a development preview, so features may change.'],
-    facts: [
+        facts: [
       ['Type', 'Website'],
-      ['Status', 'In development'],
+      ['Status', 'Live'],
       ['Runs', 'Locally in your browser'],
     ],
   },
@@ -164,7 +164,7 @@ export const PROJECTS = [
     status: 'live',
     statusLabel: 'Live website',
     summary: 'A chat assistant powered by open-source language models that run on your own machine.',
-    url: 'https://atlas-ai-beta-beryl.vercel.app/',
+    url: 'https://atlas.omarhosny.work.gd/',
     urlLabel: 'Open Atlas-AI website',
     schema: 'WebApplication',
     category: 'UtilitiesApplication',
@@ -178,7 +178,32 @@ export const PROJECTS = [
       ['Models', 'Open source, run on your own machine'],
     ],
   },
-  // No public link exists yet, so OmarLink is listed by name only.
+    {
+    slug: 'omar-agent',
+    name: 'OmarAgent',
+    kind: 'Website',
+    status: 'live',
+    statusLabel: 'Live website',
+    featured: true,
+    summary: 'An autonomous coding agent with a web control center and a Mac runner.',
+    url: 'https://omaragent.minecraftunbreakable.workers.dev/',
+    urlLabel: 'Open OmarAgent',
+    schema: 'WebApplication',
+    category: 'UtilitiesApplication',
+    intro: 'OmarAgent is an autonomous coding agent project with a live web control center.',
+    features: [
+      'An autonomous coding agent.',
+      'A web control center for coding work.',
+      'A Mac runner for carrying out tasks.',
+    ],
+    limits: [],
+    facts: [
+      ['Type', 'Coding agent'],
+      ['Status', 'Live website'],
+      ['Interface', 'Web control center'],
+    ],
+  },
+// No public link exists yet, so OmarLink is listed by name only.
   {
     slug: 'omarlink',
     name: 'OmarLink',

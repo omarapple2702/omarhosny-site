@@ -22,8 +22,8 @@ const NAV = [
   ['/lab/', 'Lab'],
   ['/random/', 'Random'],
   ['/about/', 'About'],
-  ['/contact/', 'Contact'],
 ];
+const NAV_CTA = ['/contact/', 'Contact'];
 
 const pages = [];
 function page(path, { title, description, body, schema = [], crumbs = [], noindex = false, section = '' }) {
@@ -48,6 +48,7 @@ const ART = {
   welock: A('<g class="art-float"><rect x="56" y="34" width="48" height="36" rx="7" fill="#0b1830"/><path class="art-pulse" d="M66 34V26a14 14 0 0 1 28 0v8"/><circle cx="80" cy="50" r="4.5" fill="currentColor"/><path d="M80 54v7"/></g>'),
   'terra-view': A('<g class="art-spin"><circle cx="80" cy="40" r="30" fill="#0b1830"/><ellipse cx="80" cy="40" rx="12" ry="30" stroke-opacity=".6"/><path d="M50 40h60M54 26h52M54 54h52" stroke-opacity=".5"/></g><circle class="art-pulse" cx="98" cy="28" r="2.6" fill="currentColor"/>'),
   'atlas-ai': A(net),
+  'omar-agent': A('<g class="art-float"><rect x="24" y="12" width="112" height="58" rx="7" fill="#0b1830"/><path d="M36 25h30M36 34h20M36 43h38" stroke-opacity=".6"/><path d="M88 27l9 8-9 8M103 43h13" stroke="currentColor"/><circle class="art-pulse" cx="112" cy="25" r="3" fill="currentColor"/><path d="M58 70v5M102 70v5M48 75h64" stroke-opacity=".6"/>'),
   omarlink: A('<rect x="22" y="16" width="26" height="48" rx="5" fill="#0b1830"/><rect x="64" y="26" width="78" height="34" rx="3" fill="#0b1830"/><path d="M58 64h92" stroke-opacity=".5"/><path class="art-line" d="M50 40q14-18 28-8" /><circle class="art-pulse" cx="66" cy="33" r="2.6" fill="currentColor"/>'),
 };
 const T = (inner) => A(inner, '0 0 64 64');
@@ -102,7 +103,7 @@ const EXTART = {
   tiles: A('<g font-family="Bricolage Grotesque, sans-serif" font-weight="700" text-anchor="middle" stroke="none"><g><rect x="30" y="58" width="26" height="26" rx="5" fill="#0b1830" stroke="currentColor" stroke-opacity=".5"/><text x="43" y="76" font-size="14" fill="#e8eef7">2</text></g><g><rect x="60" y="58" width="26" height="26" rx="5" fill="#0b1830" stroke="currentColor" stroke-opacity=".5"/><text x="73" y="76" font-size="14" fill="#e8eef7">4</text></g><g><rect x="90" y="58" width="26" height="26" rx="5" fill="#0b1830" stroke="currentColor" stroke-opacity=".5"/><text x="103" y="76" font-size="14" fill="#e8eef7">4</text></g><g class="art-float"><rect class="a" x="48" y="28" width="26" height="26" rx="5" fill="currentColor" fill-opacity=".85"/><text x="61" y="46" font-size="14" fill="#06101c">8</text></g><g class="art-float"><rect x="116" y="12" width="26" height="26" rx="5" fill="#0d1d38" stroke="currentColor"/><text x="129" y="30" font-size="12" fill="#e8eef7">16</text></g></g><path class="art-line" d="M73 4v18" stroke-opacity=".5"/>', '0 0 160 90'),
   tunnel: tunnelSVG, hazards: hazardSVG, chess: chessSVG,
   sky: A('<rect x="0" y="0" width="160" height="90" fill="#0d2a55" fill-opacity=".55" stroke="none"/><path d="M14 22q6-8 14-3q6-6 13 2" stroke-opacity=".4"/><path d="M110 16q6-8 14-3q6-6 13 2" stroke-opacity=".4"/><g><rect x="92" y="0" width="20" height="30" rx="2" fill="#0b1830" stroke-opacity=".7"/><rect x="88" y="26" width="28" height="9" rx="2" fill="#0b1830" stroke-opacity=".7"/><rect x="88" y="58" width="28" height="9" rx="2" fill="#0b1830" stroke-opacity=".7"/><rect x="92" y="64" width="20" height="26" rx="2" fill="#0b1830" stroke-opacity=".7"/></g><g class="art-float"><circle class="a" cx="46" cy="46" r="9" fill="currentColor" fill-opacity=".9" stroke="none"/><circle cx="49" cy="43" r="2" fill="#06101c" stroke="none"/><path d="M54 47l7 2-7 3z" fill="#e8eef7" stroke="none"/><path d="M38 48q4 6 10 2" stroke="#06101c" stroke-opacity=".6"/></g>', '0 0 160 90'),
-  dodge: A('<g class="art-dodge"><rect class="a" x="52" y="32" width="56" height="26" rx="13" fill="currentColor" fill-opacity=".9" stroke="none"/><text x="80" y="49" text-anchor="middle" font-size="11" font-weight="700" fill="#06101c" stroke="none" font-family="Hanken Grotesk, sans-serif">CLICK</text></g><path class="art-line" d="M20 80Q40 70 58 62" stroke-opacity=".6"/><path d="M58 62l9 3-4 3 4 6-3 2-4-6-4 3z" fill="#e8eef7" stroke="none"/>', '0 0 160 90'),
+  dodge: A('<g class="art-dodge"><rect class="a" x="52" y="32" width="56" height="26" rx="13" fill="currentColor" fill-opacity=".9" stroke="none"/><text x="80" y="49" text-anchor="middle" font-size="11" font-weight="700" fill="#06101c" stroke="none" font-family="Inter, sans-serif">CLICK</text></g><path class="art-line" d="M20 80Q40 70 58 62" stroke-opacity=".6"/><path d="M58 62l9 3-4 3 4 6-3 2-4-6-4 3z" fill="#e8eef7" stroke="none"/>', '0 0 160 90'),
   quiz: A('<rect x="44" y="16" width="76" height="52" rx="8" fill="#0b1830" stroke-opacity=".3" transform="rotate(-8 80 45)"/><rect x="40" y="14" width="76" height="52" rx="8" fill="#0b1830" stroke-opacity=".5" transform="rotate(-3 80 45)"/><g class="art-float"><rect x="42" y="12" width="76" height="52" rx="8" fill="#0d1d38"/><text x="80" y="50" text-anchor="middle" font-size="34" font-weight="700" class="a" fill="currentColor" stroke="none" font-family="Bricolage Grotesque, sans-serif">?</text></g><g class="art-line" stroke-opacity=".35"><path d="M122 20l22-8M122 62l24 10M40 40L14 40"/></g><circle class="a art-pulse" cx="146" cy="11" r="3.2" fill="currentColor"/><circle class="a art-pulse" cx="148" cy="73" r="3.2" fill="currentColor"/><circle class="a art-pulse" cx="12" cy="40" r="3.2" fill="currentColor"/>', '0 0 160 90'),
 };
 const INTART = {
@@ -119,12 +120,43 @@ const constMarkup = (nodes, core) => {
   return `<div class="const"><div class="const-plane"><svg viewBox="0 0 800 450" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.2" class="const-lines">${all.slice(1).map((n, i) => `<path d="M${pos[i + 1][0]} ${pos[i + 1][1]}L${pos[0][0]} ${pos[0][1]}" stroke-opacity=".35"/>`).join('')}</svg><ul>${all.map((n, i) => `<li><button type="button" class="cn${i ? '' : ' cn-core'}${n.cls ? ' ' + n.cls : ''}" data-x="${n.x}" data-y="${n.y}" data-z="${n.z}" data-text="${esc(n.text)}" aria-pressed="false">${esc(n.short || n.name)}</button></li>`).join('')}</ul></div></div>`;
 };
 
+// ---------- Home page visuals (original SVG/CSS; no external assets) ----------
+const MAILTO_PROJECT = SITE.projectEmail;
+const lockSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.5" r="1.2" fill="currentColor"/></svg>';
+const MOCK = {
+  'omar-calculator': '<div class="m-calc"><div class="m-screen">( 12 + 8 ) × 3<b>60</b></div><div class="m-keys">' + '<i></i>'.repeat(12) + '</div><div class="m-bars"><i></i><i></i><i></i></div></div>',
+  'day-frame': '<div class="m-day"><div class="m-row">Task<span class="pill-tag">Study</span></div><div class="m-row">Task<span class="pill-tag">Projects</span></div><div class="m-row">Task<span class="pill-tag">Life</span></div><div class="m-timer">Focus timer<b>25:00</b></div></div>',
+  welock: `<div class="m-lock"><span class="badge">${lockSVG}</span><span class="pill-tag">Touch ID</span><span class="pill-tag sun">Locked</span></div>`,
+  'omar-agent': '<div class="m-term" role="presentation"><div class="bar"><i></i><i></i><i></i></div><p><b>›</b> Web control center</p><p><b>›</b> Mac runner</p><p><u>●</u> Autonomous coding agent <span class="caret"></span></p></div>',
+};
+const bento = (p) => `<li><a class="bcard rv" href="${projHref(p)}"><div class="mock" aria-hidden="true">${MOCK[p.slug] || ''}</div><div class="bcard-body"><span class="card-name">${esc(p.name)}</span><span class="card-sum">${esc(p.summary || '')}</span><span class="row-status">${dot(p.status || 'none')}${esc(p.statusLabel)}</span></div></a></li>`;
+
+const BUDDY = `<div class="buddy" data-buddy><div class="buddy-float"><svg viewBox="0 0 200 230" aria-hidden="true" focusable="false">
+  <defs><linearGradient id="bd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#16294a"/><stop offset="1" stop-color="#0b1423"/></linearGradient></defs>
+  <path d="M100 52V26" stroke="#67e8f9" stroke-width="5" stroke-linecap="round"/>
+  <circle class="bulb" cx="100" cy="20" r="9" fill="#ffd98a"/><circle cx="97" cy="17" r="3" fill="#fff" opacity=".8"/>
+  <rect x="14" y="104" width="22" height="46" rx="11" fill="#22b8cf"/><rect x="164" y="104" width="22" height="46" rx="11" fill="#22b8cf"/>
+  <rect x="28" y="50" width="144" height="150" rx="56" fill="url(#bd)" stroke="#67e8f9" stroke-width="4"/>
+  <path d="M52 66q48-18 96 0" stroke="#fff" stroke-opacity=".14" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <rect x="46" y="86" width="108" height="72" rx="32" fill="#050a13" stroke="#67e8f9" stroke-opacity=".35" stroke-width="2"/>
+  <g class="eye"><circle cx="80" cy="120" r="15" fill="#f2f7ff"/><g class="pupil" data-pupil><circle cx="80" cy="120" r="7.5" fill="#050a13"/><circle cx="82.5" cy="117" r="2.4" fill="#fff"/></g></g>
+  <g class="eye"><circle cx="120" cy="120" r="15" fill="#f2f7ff"/><g class="pupil" data-pupil><circle cx="120" cy="120" r="7.5" fill="#050a13"/><circle cx="122.5" cy="117" r="2.4" fill="#fff"/></g></g>
+  <path d="M90 146q10 8 20 0" stroke="#67e8f9" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+  <circle cx="62" cy="144" r="5" fill="#ffd98a" opacity=".5"/><circle cx="138" cy="144" r="5" fill="#ffd98a" opacity=".5"/>
+  <rect x="84" y="170" width="32" height="10" rx="5" fill="#67e8f9" opacity=".85"/>
+</svg></div><div class="buddy-shadow"></div></div>`;
+const ringHTML = (n) => `<div class="ring r${n}"><div class="ring-spin"><div class="sat"><div class="sat-fix"><i></i></div></div></div></div>`;
+const RINGS = ringHTML(1) + ringHTML(2) + ringHTML(3);
+const CHIPS = ['Websites and software', 'Five games to play', 'Nothing is tracked', 'A native macOS app'].map((t, i) => `<span class="chip-float c${i + 1}">${t}</span>`).join('');
+const MARQUEE = ['I build websites and software', ...LIVE.map((x) => x.name), 'Arcade', 'Lab', 'Random'];
+const marquee = () => { const row = MARQUEE.map((t) => `<span>${esc(t)} ✦</span>`).join(''); return `<div class="marquee-wrap" aria-hidden="true"><div class="marquee"><div class="marquee-track">${row}${row}</div></div></div>`; };
+
 const projHref = (p) => `/projects/${p.slug}/`;
 const siteData = {
   host: 'www.omarhosny.work.gd', email: SITE.email,
   projects: PROJECTS.map((p) => ({ name: p.name, slug: p.slug, href: projHref(p), summary: p.summary || '', statusLabel: p.statusLabel, pending: !!p.pending, lines: (p.features || []).filter((f) => f.length > 20).slice(0, 3) })),
   socials: SOCIALS.map((s) => ({ name: s.name, handle: s.handle, url: s.url })),
-  about: ['Born in Alexandria, Egypt.', 'Builds websites and software.', `Certificates: ${ABOUT.certificates.join(', ')}.`, `Sports: ${ABOUT.sports.join(', ')}.`],
+  about: ['Egyptian software developer and independent creator based in Alexandria, Egypt.', 'Designs and builds websites, software applications and AI-powered tools.'],
   games: ['Reaction test', 'Target hunt', 'Memory grid', 'Avoid', 'Logic challenge'],
   extGames: EXTERNAL_GAMES.map((g) => ({ id: g.id, name: g.name, url: g.url, host: hostOf(g.url), category: g.quiz ? 'Quiz project' : g.category, summary: g.summary, shows: g.shows, siteTitle: g.siteTitle, quiz: !!g.quiz, visual: g.visual })),
   interests: ['Tennis', 'Swimming (5 stars)', 'Building websites and software', 'Making games', 'Maths'],
@@ -139,7 +171,7 @@ function card(p) {
   <div class="card-body"><span class="card-name">${esc(p.name)}</span><span class="card-sum">${esc(p.summary || '')}</span><span class="row-status">${dot(p.status || 'none')}${esc(p.statusLabel)}</span></div>
 </a></li>`;
 }
-const tile = (href, name, text, key) => `<li><a class="tile tilt rv" href="${href}"><span><span class="card-name">${name}</span><span class="card-sum">${text}</span></span>${TILE[key]}</a></li>`;
+const tile = (href, name, text, key) => `<li><a class="tile rv" href="${href}"><span><span class="card-name">${name}</span><span class="card-sum">${text}</span></span>${TILE[key]}</a></li>`;
 
 // ---------- Home ----------
 page('/', {
@@ -147,19 +179,27 @@ page('/', {
   description: 'The personal website of Omar Hosny: websites and software he has built, including Omar Calc, Day Frame, WeLock, TerraView and Atlas-AI, plus an arcade and a lab to play in.',
   section: 'home',
   body: `
-<section class="hero3 wrap">
-  <div class="intro">
-    <h1>Omar Hosny</h1>
-    <p class="lede">I build websites and software. This is where the projects live, and a few things to play with.</p>
-    <div class="actions"><a class="btn btn-primary" href="/projects/">Explore projects</a><a class="btn" href="/arcade/">Enter Arcade</a><a class="btn" href="/about/">About Omar</a></div>
-    <p class="hero-hint">The core is made of my projects. Drag it, click it, or click a project name to open it.</p>
-  </div>
-  <figure class="stage stage-bare hero-visual"><canvas data-scene="hero" role="img" aria-label="Interactive 3D model: a glowing core with the projects orbiting it. Drag to spin it. Click a project name to open that project. All projects are also listed below."></canvas></figure>
+<section class="hero wrap">
+  <p class="eyebrow"><span class="ping" aria-hidden="true"></span>Websites, software and projects</p>
+  <h1>Omar <span class="hl">Hosny</span></h1>
+  <p class="lede">I build websites and software. This is where the projects live, and a few things to play with.</p>
+  <div class="actions"><a class="btn btn-primary" href="/projects/">Explore projects${ext}</a><a class="btn" href="/arcade/">Enter Arcade${ext}</a></div>
+  <p class="hero-note">Nothing is tracked and scores stay on your device. <a href="/about/">About Omar</a></p>
+  <div class="hero-stage" aria-hidden="true">${RINGS}${BUDDY}${CHIPS}</div>
 </section>
+${marquee()}
 <section class="section wrap" aria-labelledby="work-h">
   <div class="section-head"><h2 id="work-h">Projects</h2><p>Live websites, apps and work in progress.</p></div>
-  <ul class="cards">${LIVE.filter((p) => p.featured).map(card).join('')}</ul>
+  <ul class="bento">${LIVE.filter((p) => p.featured).map(bento).join('')}</ul>
   <p class="more-link"><a href="/projects/">All ${LIVE.length} projects</a></p>
+</section>
+<section class="section wrap" aria-labelledby="how-h">
+  <div class="section-head"><h2 id="how-h">Start here</h2></div>
+  <ol class="steps">
+    <li class="step rv"><span class="step-n" aria-hidden="true">1</span><h3>Projects</h3><p>Live websites, apps and work in progress.</p><a class="step-link" href="/projects/">Explore projects${ext}</a></li>
+    <li class="step rv"><span class="step-n" aria-hidden="true">2</span><h3>Play</h3><p>Real games and small experiments. Nothing is tracked and scores stay on your device.</p><a class="step-link" href="/arcade/">Enter Arcade${ext}</a></li>
+    <li class="step rv"><span class="step-n" aria-hidden="true">3</span><h3>Contact</h3><p>Email and social accounts.</p><a class="step-link" href="/contact/">Contact Omar${ext}</a></li>
+  </ol>
 </section>
 <section class="section wrap" aria-labelledby="play-h">
   <div class="section-head"><h2 id="play-h">Play</h2><p>Real games and small experiments. Nothing is tracked and scores stay on your device.</p></div>
@@ -167,19 +207,25 @@ page('/', {
 </section>
 <section class="section wrap" aria-labelledby="more-h">
   <div class="section-head"><h2 id="more-h">Elsewhere on this site</h2></div>
-  <ul class="link-list">
-    <li><a href="/interests/"><span class="li-name">Interests</span><span class="li-desc">Tennis, swimming, building, games and maths.</span>${chev}</a></li>
-    <li><a href="/learning/"><span class="li-name">Learning</span><span class="li-desc">Certificates, and what I have built with them.</span>${chev}</a></li>
-    <li><a href="/about/"><span class="li-name">About</span><span class="li-desc">Background, certificates and sports.</span>${chev}</a></li>
-    <li><a href="/contact/"><span class="li-name">Contact</span><span class="li-desc">Email and social accounts.</span>${chev}</a></li>
+  <ul class="teasers">
+    <li><a class="teaser rv" href="/interests/"><span class="li-name">Interests</span><span class="li-desc">Tennis, swimming, building, games and maths.</span>${chev}</a></li>
+    <li><a class="teaser rv" href="/learning/"><span class="li-name">Learning</span><span class="li-desc">Certificates, and what I have built with them.</span>${chev}</a></li>
+    <li><a class="teaser rv" href="/about/"><span class="li-name">About</span><span class="li-desc">Background, software and projects.</span>${chev}</a></li>
   </ul>
+</section>
+<section class="section wrap" aria-labelledby="cta-h">
+  <div class="cta rv">
+    <h2 id="cta-h">Email is the <span class="hl">best way</span> to reach me.</h2>
+    <p class="lede">You can also find me on social media.</p>
+    <div class="actions"><a class="btn btn-primary" href="mailto:${SITE.email}">Send email${ext}</a><a class="btn" href="/contact/">Contact page</a></div>
+  </div>
 </section>`,
 });
 
 // ---------- Projects index ----------
 page('/projects/', {
   title: 'Projects — Omar Hosny',
-  description: 'Websites and software by Omar Hosny: Omar Calc, OmniDesk, Day Frame, WeLock, TerraView and Atlas-AI, with OmarLink coming soon.',
+  description: 'Websites and software by Omar Hosny, including Omar Calc, OmniDesk, Day Frame, WeLock, TerraView, Atlas-AI and OmarAgent, with OmarLink coming soon.',
   section: 'projects',
   crumbs: [['Projects', '/projects/']],
   schema: [{
@@ -264,17 +310,17 @@ for (const p of PENDING) {
 
 // ---------- About ----------
 const CN = [
-  ['Omar', '50%', '50%', '40px', 'cn-core', 'Omar Hosny, born in Alexandria, Egypt. Builds websites and software.'],
+  ['Omar', '50%', '50%', '40px', 'cn-core', 'Omar Hosny, an Egyptian software developer and independent creator based in Alexandria, Egypt.'],
   ['Omar Calc', '20%', '22%', '10px', 'cn-projects', PROJECTS[0].summary], ['Day Frame', '38%', '14%', '60px', 'cn-projects', PROJECTS[2].summary],
   ['WeLock', '78%', '20%', '20px', 'cn-projects', PROJECTS[3].summary.replace('\u00a0', ' ')], ['TerraView', '86%', '48%', '-20px', 'cn-projects', PROJECTS[4].summary],
-  ['Atlas-AI', '70%', '78%', '30px', 'cn-projects', PROJECTS[5].summary], ['OmniDesk', '30%', '80%', '0px', 'cn-projects', PROJECTS[1].summary],
-  ['Certificates', '10%', '52%', '-30px', '', `${ABOUT.certificates.join(', ')}.`], ['Sports', '60%', '90%', '-10px', '', `${ABOUT.sports.join(' and ')}.`],
+  ['Atlas-AI', '70%', '78%', '30px', 'cn-projects', PROJECTS[5].summary],
+  ['OmarAgent', '88%', '62%', '-10px', 'cn-projects', PROJECTS[6].summary], ['OmniDesk', '16%', '60%', '-20px', 'cn-projects', PROJECTS[1].summary],
 ];
 const CLINES = [[1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [8, 0]];
 const CPOS = CN.map((n) => [parseFloat(n[1]) * 8, parseFloat(n[2]) * 4.5]);
 page('/about/', {
   title: 'About Omar Hosny',
-  description: 'About Omar Hosny: born in Alexandria, Egypt, he builds websites and software, holds Cambridge and UCMAS certificates, and plays tennis and swims.',
+  description: 'About Omar Hosny: an Egyptian software developer and independent creator based in Alexandria, Egypt, who designs and builds websites, software applications and AI-powered tools.',
   section: 'about',
   crumbs: [['About', '/about/']],
   schema: [{
@@ -282,28 +328,27 @@ page('/about/', {
     name: 'About Omar Hosny', isPartOf: { '@id': SITE_ID }, about: { '@id': PERSON_ID }, mainEntity: { '@id': PERSON_ID },
   }],
   body: `
-<header class="page-head wrap"><h1>About</h1><p class="lede">I build websites and software, and I play tennis and swim.</p></header>
+<header class="page-head wrap"><h1>About</h1><p class="lede">I design and build websites, software applications and AI‑powered tools.</p></header>
 <section class="wrap" aria-labelledby="map-h">
   <h2 class="sr-only" id="map-h">Map of Omar’s work and background</h2>
-  <p class="hint">Hover, tap or focus a node to read about it. The same facts are listed below.</p>
+  <p class="hint">Hover, tap or focus a node to read about it. Every project is also on the Projects page.</p>
   ${constMarkup(CN.slice(1).map(([name, x, y, z, cls, text]) => ({ name, x, y, z, cls, text })), { name: CN[0][0], x: CN[0][1], y: CN[0][2], z: CN[0][3], text: CN[0][5] })}
   <p id="const-detail" aria-live="polite">${esc(CN[0][5])}</p>
 </section>
 <div class="wrap cols">
   <div class="prose">
-    <p>I’m Omar Hosny. I was born in Alexandria, Egypt, and I build websites and software: calculators, a personal workspace, a Mac app and a chat assistant. Each project page links to the live website or the source.</p>
-    <h2>Certificates</h2>
-    <p>I hold Cambridge Lower Secondary and Cambridge Primary certificates, and a UCMAS certificate.</p>
-    <h2>Sports</h2>
-    <p>Away from the screen I play tennis and swim. In swimming I have achieved 5 stars.</p>
+    <p class="bio">I’m Omar Hosny, an Egyptian software developer and independent creator based in Alexandria, Egypt. I design and build websites, software applications and AI-powered tools. My work spans web development, desktop applications and AI projects, with a focus on creating practical, useful technology.</p>
     <h2>Projects</h2>
     <p>Start with <a href="/projects/omar-calculator/">Omar Calc</a>, <a href="/projects/day-frame/">Day Frame</a> or <a href="/projects/welock/">WeLock</a>, or browse <a href="/projects/">all projects</a>. To get in touch, see the <a href="/contact/">contact page</a>. There is also an <a href="/arcade/">arcade</a> and a <a href="/lab/">lab</a> on this site.</p>
   </div>
-  <aside aria-label="Details"><dl class="facts">
+  <aside aria-label="Details">
+    <div class="creator-art rv">
+      <div class="cr-ring a" aria-hidden="true"><i></i></div><div class="cr-ring b" aria-hidden="true"><i></i></div>
+      <div class="cr-card"><strong translate="no">Omar Hosny</strong><a href="${SITE.url}/" translate="no">omarhosny.work.gd</a></div>
+      <div class="cr-mono" aria-hidden="true">OH</div>
+    </div>
+    <dl class="facts">
     <div><dt>Full name</dt><dd>${esc(ABOUT.fullName)}</dd></div>
-    <div><dt>Born in</dt><dd>${esc(ABOUT.birthplace)}</dd></div>
-    <div><dt>Certificates</dt><dd>${ABOUT.certificates.map(esc).join('<br>')}</dd></div>
-    <div><dt>Sports</dt><dd>${ABOUT.sports.map(esc).join('<br>')}</dd></div>
   </dl></aside>
 </div>`,
 });
@@ -324,13 +369,13 @@ page('/contact/', {
 <div class="wrap"><div class="hub" aria-hidden="true">
   <svg viewBox="0 0 800 280" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4">
     <g class="layer">${hubNodes.map((n, i) => { const a = (i / hubNodes.length) * Math.PI * 2 - Math.PI / 2, x = 400 + Math.cos(a) * 270, y = 140 + Math.sin(a) * 100; return `<path class="flow" d="M400 140L${x.toFixed(0)} ${y.toFixed(0)}" stroke-opacity=".45"/>`; }).join('')}</g>
-    ${hubNodes.map((n, i) => { const a = (i / hubNodes.length) * Math.PI * 2 - Math.PI / 2, x = 400 + Math.cos(a) * 270, y = 140 + Math.sin(a) * 100, d = 8 + (i % 3) * 10; return `<g class="layer" data-d="${d}"><circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="5" fill="currentColor"/><text x="${x.toFixed(0)}" y="${(y + (y > 140 ? 24 : -14)).toFixed(0)}" text-anchor="middle" fill="#e8eef7" stroke="none" font-size="15" font-family="Hanken Grotesk, sans-serif">${esc(n)}</text></g>`; }).join('')}
+    ${hubNodes.map((n, i) => { const a = (i / hubNodes.length) * Math.PI * 2 - Math.PI / 2, x = 400 + Math.cos(a) * 270, y = 140 + Math.sin(a) * 100, d = 8 + (i % 3) * 10; return `<g class="layer" data-d="${d}"><circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="5" fill="currentColor"/><text x="${x.toFixed(0)}" y="${(y + (y > 140 ? 24 : -14)).toFixed(0)}" text-anchor="middle" fill="#e8eef7" stroke="none" font-size="15" font-family="Inter, sans-serif">${esc(n)}</text></g>`; }).join('')}
     <circle cx="400" cy="140" r="26" fill="#0b1830"/><circle cx="400" cy="140" r="9" fill="currentColor"/>
   </svg>
 </div></div>
 <section class="wrap section" aria-labelledby="email-h">
   <h2 id="email-h" class="sr-only">Email</h2>
-  <ul class="link-list"><li><a href="mailto:${SITE.email}"><span class="li-name">Send email</span><span class="li-desc">${SITE.email}</span>${chev}</a></li></ul>
+  <ul class="link-list"><li><a href="mailto:${SITE.email}"><span class="li-name">Send email</span><span class="li-desc">${SITE.email}</span>${chev}</a></li><li><a href="mailto:${SITE.projectEmail}"><span class="li-name">Site support and updates</span><span class="li-desc">${SITE.projectEmail}</span>${chev}</a></li></ul>
 </section>
 <section class="wrap section" aria-labelledby="social-h">
   <div class="section-head"><h2 id="social-h">Social accounts</h2></div>
@@ -519,7 +564,7 @@ page('/terms/', {
 <p>You may browse and link to the site. Please do not try to break, overload or gain unauthorised access to it, scrape it at a rate that disrupts it, use it to break the law, or pretend to be me.</p>
 <h2>Ownership</h2>
 <p>The text, design and original code of this site belong to Omar Hosny, all rights reserved, unless a page says otherwise. Please ask before copying them.</p>
-<p>Some material belongs to others. The fonts Bricolage Grotesque and Hanken Grotesk are used under the SIL Open Font License 1.1 (<a href="/fonts/LICENSE-bricolage-grotesque.txt">Bricolage Grotesque licence</a>, <a href="/fonts/LICENSE-hanken-grotesk.txt">Hanken Grotesk licence</a>). Apple, macOS and Touch&nbsp;ID are trademarks of Apple Inc. Other product names belong to their owners, and I am not affiliated with them. WeLock is not affiliated with MakLock.</p>
+<p>Some material belongs to others. The fonts Bricolage Grotesque and Inter are used under the SIL Open Font License 1.1 (<a href="/fonts/LICENSE-bricolage-grotesque.txt">Bricolage Grotesque licence</a>, <a href="/fonts/LICENSE-inter.txt">Inter licence</a>). Apple, macOS and Touch&nbsp;ID are trademarks of Apple Inc. Other product names belong to their owners, and I am not affiliated with them. WeLock is not affiliated with MakLock.</p>
 <h2>Projects and software</h2>
 <p>The pages describe my projects as I understand them on the date shown on each page. A project’s own website or repository is the authority on what it does, how to install it and the licence or terms that apply to it. Some projects are in development and may change or stop working. Software is provided as is, without any promise that it suits your purpose.</p>
 <h2>External links</h2>
@@ -686,7 +731,8 @@ function layout(p) {
     itemListElement: [['Home', '/'], ...p.crumbs].map(([name, path], i) => ({ '@type': 'ListItem', position: i + 1, name, item: abs(path) })),
   } : null;
   const graph = [...(p.path === '/' ? [person, website] : []), ...p.schema, ...(crumbs ? [crumbs] : [])];
-  const nav = NAV.map(([href, label]) => `<li><a href="${href}"${p.section && href === `/${p.section}/` ? ' aria-current="page"' : ''}>${label}</a></li>`).join('');
+  const navLink = ([href, label], cls = '') => `<li${cls ? ` class="${cls}"` : ''}><a href="${href}"${p.section && href === `/${p.section}/` ? ' aria-current="page"' : ''}>${label}</a></li>`;
+  const nav = NAV.map((n) => navLink(n)).join('') + navLink(NAV_CTA, 'nav-cta');
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -701,8 +747,9 @@ function layout(p) {
 <meta name="author" content="${SITE.name}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/bricolage-grotesque-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/styles.css">\n<link rel="modulepreload" href="/js/core.js">
+<link rel="preload" href="/fonts/inter-latin-Regular.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="/fonts/inter-latin-SemiBold.woff" as="font" type="font/woff" crossorigin>
+<link rel="stylesheet" href="/styles.css">
 <meta property="og:type" content="${p.path === '/' ? 'website' : 'article'}">
 <meta property="og:site_name" content="${SITE.name}">
 <meta property="og:title" content="${esc(p.title)}">
@@ -720,21 +767,22 @@ ${graph.length ? `<script type="application/ld+json">${JSON.stringify(graph.leng
 </head>
 <body data-page="${p.id}">
 <a class="skip" href="#main">Skip to main content</a>
-<header class="site-header"><div class="wrap bar">
+<header class="site-header"><div class="pill">
   <a class="brand" href="/" translate="no">Omar Hosny</a>
-  <button type="button" class="menu-btn" aria-expanded="false" aria-controls="main-nav">Menu</button>
   <nav aria-label="Main" id="main-nav"><ul class="nav-list">${nav}</ul></nav>
+  <button type="button" class="menu-btn" aria-expanded="false" aria-controls="main-nav"><span class="sr-only">Menu</span><span class="bars" aria-hidden="true"></span></button>
 </div></header>
 <main id="main">${p.body}</main>
 <div id="live" class="sr-only" role="status" aria-live="polite"></div>
 <footer class="site-footer">
   <div class="wrap foot">
-    <div><p translate="no"><strong>Omar Hosny</strong></p><p>Websites, software and projects.</p><p class="foot-note">Press <kbd class="term-key">&#96;</kbd> for a terminal. There are a few other secrets.</p></div>
+    <div><p translate="no"><strong>Omar Hosny</strong></p><p>Websites, software and projects.</p><p class="foot-note">Created by <a href="${SITE.url}/" translate="no">Omar Hosny</a>.</p><p class="foot-note">Press <kbd class="term-key">&#96;</kbd> for a terminal. There are a few other secrets.</p></div>
     <nav aria-labelledby="f-site"><h2 id="f-site">Site</h2><ul><li><a href="/">Home</a></li><li><a href="/projects/">Projects</a></li><li><a href="/interests/">Interests</a></li><li><a href="/learning/">Learning</a></li><li><a href="/arcade/">Arcade</a></li><li><a href="/lab/">Lab</a></li><li><a href="/random/">Random</a></li><li><a href="/about/">About</a></li><li><a href="/contact/">Contact</a></li></ul></nav>
     <nav aria-labelledby="f-proj"><h2 id="f-proj">Projects</h2><ul>${LIVE.map((x) => `<li><a href="/projects/${x.slug}/">${esc(x.name)}</a></li>`).join('')}<li><a href="/projects/omarlink/">OmarLink (soon)</a></li></ul></nav>
-    <div><h2>Email</h2><ul><li><a href="mailto:${SITE.email}">${SITE.email}</a></li></ul></div>
+    <div><h2>Email</h2><ul><li><span class="mail-label">Contact Omar</span><a href="mailto:${SITE.email}">${SITE.email}</a></li><li><span class="mail-label">Site support and updates</span><a href="mailto:${SITE.projectEmail}">${SITE.projectEmail}</a></li></ul></div>
   </div>
   <div class="wrap"><div class="legal"><span>© ${new Date().getFullYear()} Omar Hosny</span><nav aria-label="Legal"><ul><li><a href="/privacy/">Privacy Policy</a></li><li><a href="/terms/">Terms</a></li><li><a href="/cookies/">Cookies</a></li><li><a href="/omar-terms/">Omar™ Terms</a></li></ul></nav><span class="legal-tools"><button type="button" class="link-btn" id="motion-toggle" aria-pressed="false">Motion: full</button><button type="button" class="link-btn" data-open-terminal>Terminal</button></span></div></div>
+  <div class="wordmark" aria-hidden="true" translate="no">Omar Hosny</div>
 </footer>
 <script type="application/json" id="site-data">${JSON.stringify(siteData).replace(/</g, '\\u003c')}</script>
 <script type="module" src="/js/core.js"></script>

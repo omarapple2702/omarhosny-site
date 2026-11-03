@@ -11,13 +11,22 @@ if (prefs.theme) applyTheme(prefs.theme, false);
 if (prefs.motion === 'reduced') setMotion(true);
 if (prefs.fx === 'scan') root.dataset.fx = 'scan';
 
-// ---- Mobile menu: collapses behind a button; no scroll lock; Escape closes ----
+// ---- Mobile menu: stacked panel under the pill; Escape, link click and focus leaving close it ----
 (() => {
   const btn = $('.menu-btn'), nav = $('#main-nav'); if (!btn || !nav) return;
   const set = (o) => { btn.setAttribute('aria-expanded', String(o)); nav.classList.toggle('open', o); };
   btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
+  nav.addEventListener('click', (e) => { if (e.target.closest('a')) set(false); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && nav.classList.contains('open')) { set(false); btn.focus(); } });
-  nav.addEventListener('focusout', (e) => { if (nav.classList.contains('open') && !nav.contains(e.relatedTarget) && e.relatedTarget !== btn) set(false); });
+  document.addEventListener('pointerdown', (e) => { if (nav.classList.contains('open') && !nav.contains(e.target) && !btn.contains(e.target)) set(false); });
+  nav.addEventListener('focusout', (e) => { if (nav.classList.contains('open') && e.relatedTarget && !nav.contains(e.relatedTarget) && e.relatedTarget !== btn) set(false); });
+})();
+
+// ---- Header gains a shadow once the page scrolls ----
+(() => {
+  const h = $('.site-header'); if (!h) return;
+  const on = () => h.classList.toggle('scrolled', scrollY > 8);
+  on(); addEventListener('scroll', on, { passive: true });
 })();
 
 // ---- Motion switch (footer) ----
@@ -28,35 +37,14 @@ if (prefs.fx === 'scan') root.dataset.fx = 'scan';
   window.addEventListener('oh:motion', sync);
 })();
 
-// ---- Scroll depth: reveal below-the-fold blocks in 3D, expose scroll for parallax ----
+// ---- Scroll reveal: fade and slide up with staggered delays; blocks already in view are left alone ----
 (() => {
+  if (motion.off) return;
   const els = $$('.rv').filter((e) => e.getBoundingClientRect().top > innerHeight * 0.92);
-  if (els.length && 'IntersectionObserver' in window) {
-    els.forEach((e, i) => { e.classList.add('rv-wait'); e.style.setProperty('--d', (i % 4) * 60 + 'ms'); });
-    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('rv-in'); io.unobserve(e.target); } }), { threshold: 0.12 });
-    els.forEach((e) => io.observe(e));
-  }
-  let tick = false;
-  addEventListener('scroll', () => { if (tick || motion.off) return; tick = true; requestAnimationFrame(() => { root.style.setProperty('--sy', Math.min(scrollY, 1200)); tick = false; }); }, { passive: true });
-})();
-
-// ---- Card tilt (depth + light), hover-capable pointers only ----
-(() => {
-  if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-  for (const c of $$('.tilt')) {
-    c.addEventListener('pointermove', (e) => { if (motion.off) return; const r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height; c.style.setProperty('--ry', ((x - 0.5) * 9).toFixed(2) + 'deg'); c.style.setProperty('--rx', ((0.5 - y) * 9).toFixed(2) + 'deg'); c.style.setProperty('--mx', (x * 100).toFixed(1) + '%'); c.style.setProperty('--my', (y * 100).toFixed(1) + '%'); });
-    c.addEventListener('pointerleave', () => { c.style.setProperty('--ry', '0deg'); c.style.setProperty('--rx', '0deg'); });
-  }
-})();
-
-// ---- Custom cursor: desktop enhancement; the real cursor stays visible ----
-(() => {
-  if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-  const dot = document.createElement('div'), ring = document.createElement('div'); dot.className = 'cur-dot'; ring.className = 'cur-ring'; dot.setAttribute('aria-hidden', 'true'); ring.setAttribute('aria-hidden', 'true');
-  document.body.append(dot, ring); let x = -50, y = -50, rx = -50, ry = -50, raf = 0;
-  const loop = () => { rx += (x - rx) * 0.2; ry += (y - ry) * 0.2; ring.style.transform = `translate3d(${rx}px,${ry}px,0)`; dot.style.transform = `translate3d(${x}px,${y}px,0)`; raf = Math.abs(x - rx) + Math.abs(y - ry) > 0.3 ? requestAnimationFrame(loop) : 0; };
-  addEventListener('pointermove', (e) => { if (e.pointerType !== 'mouse' || motion.off) { root.classList.remove('cur-on'); return; } root.classList.add('cur-on'); x = e.clientX; y = e.clientY; if (!raf) raf = requestAnimationFrame(loop); const t = e.target.closest?.('a,button,input,select,textarea,summary,canvas,[role=button]'); ring.classList.toggle('big', !!t); }, { passive: true });
-  document.addEventListener('pointerleave', () => root.classList.remove('cur-on'));
+  if (!els.length || !('IntersectionObserver' in window)) return;
+  els.forEach((e) => { e.classList.add('rv-wait'); e.style.setProperty('--d', [...e.parentElement.children].indexOf(e) % 4 * 90 + 'ms'); });
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('rv-in'); setTimeout(() => e.target.classList.add('done'), 1000); io.unobserve(e.target); } }), { threshold: 0.12 });
+  els.forEach((e) => io.observe(e));
 })();
 
 // ---- Terminal (a visual Easter egg: only prints information about this site) ----
@@ -116,9 +104,6 @@ addEventListener('keydown', (e) => { const t = e.target; if (e.key === '`' && !e
 // ---- Lazy-load heavy parts ----
 const page = document.body.dataset.page;
 if ($('canvas[data-scene]')) import('./scenes.js').then((m) => m.mountScenes());
-if (!navigator.connection?.saveData && 'IntersectionObserver' in window) {
-  const bg = document.createElement('canvas'); bg.className = 'bg-canvas'; bg.setAttribute('aria-hidden', 'true'); document.body.prepend(bg);
-  const go = () => import('./scenes.js').then((m) => m.background(bg)); 'requestIdleCallback' in window ? requestIdleCallback(go, { timeout: 1500 }) : setTimeout(go, 300);
-}
+if ($('[data-buddy]')) import('./hero.js').then((m) => m.init());
 const mods = { learning: 'pages.js', arcade: 'arcade.js', lab: 'lab.js', random: 'pages.js', about: 'pages.js', contact: 'pages.js', 'projects-omar-calculator': 'pages.js', notfound: 'pages.js' };
 if (mods[page]) import('./' + mods[page]).then((m) => m.init?.(page));

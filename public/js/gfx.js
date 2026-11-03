@@ -94,7 +94,7 @@ export class Stage {
   }
   text(str, p, size, col, al = 1, align = 'center', weight = 600) {
     const P = this.cam(p), k = P[3];
-    this.push(P[2] - 0.01, (g) => { g.font = `${weight} ${Math.max(9, size * k)}px "Hanken Grotesk", system-ui, sans-serif`; g.textAlign = align; g.textBaseline = 'middle'; g.fillStyle = css(col, al); g.fillText(str, P[0], P[1]); });
+    this.push(P[2] - 0.01, (g) => { g.font = `${weight} ${Math.max(9, size * k)}px "Inter", system-ui, sans-serif`; g.textAlign = align; g.textBaseline = 'middle'; g.fillStyle = css(col, al); g.fillText(str, P[0], P[1]); });
     return P;
   }
   // Shaded mesh. opt: {light:[x,y,z], base, edge, fillA, wire, lit}

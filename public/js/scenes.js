@@ -6,55 +6,6 @@ const inside = (P, x, y) => { let c = false; for (let i = 0, j = P.length - 1; i
 const follow = (st, dt, ax = 0.5, ay = 0.3, k = 3.5) => { const a = st.amb, e = 1 - Math.exp(-dt * k); st.yaw += (st.ptr.x * ax * a - st.yaw) * e; st.pitch += (st.ptr.y * ay * a - st.pitch) * e; };
 
 export const scenes = {
-  // ---- Home hero: a core with the projects orbiting it as clickable nodes ----
-  hero(st) {
-    const lite = st.lite, N = lite ? 55 : 110, ico = Mesh.ico(), spin = { v: 0 }; let burst = 0, pulse = -1, hover = null;
-    const parts = Array.from({ length: N }, () => { const u = Math.random() * 2 - 1, a = Math.random() * TAU, r = 1.9 + Math.random() * 1.6, s = Math.sqrt(1 - u * u); return { p: [r * s * Math.cos(a), r * u, r * s * Math.sin(a)], ph: Math.random() * TAU, sz: 0.012 + Math.random() * 0.02 }; });
-    const projs = (siteData().projects || []).map((p, i, all) => ({ ...p, R: 2.35 + (i % 3) * 0.3, ph: (i / all.length) * TAU, sp: 0.16 + (i % 2) * 0.05, tilt: (i % 3 - 1) * 0.5 }));
-    let hits = [];
-    st.dist = 8.2;
-    st.c.addEventListener('click', (e) => {
-      const r = st.c.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
-      const h = hits.filter((n) => Math.hypot(n.x - x, n.y - y) < (n.r + (st.lite ? 20 : 10))).sort((a, b) => a.z - b.z)[0];
-      if (h?.href) { location.href = h.href; return; }
-      pulse = 0; burst = 1; spin.v += 2.2; st.wake(90);
-    });
-    st.run((t, dt) => {
-      const A = st.amb, sc = clamp(scrollY / Math.max(1, innerHeight), 0, 1.4);
-      follow(st, dt, 0.45, 0.28); st.begin(); st.dist = 8.2 + sc * 1.8;
-      spin.v *= Math.exp(-dt * 1.6); burst *= Math.exp(-dt * 1.8); if (pulse >= 0) pulse += dt * 1.4; if (pulse > 1) pulse = -1;
-      const ry = t * 0.2 * A + spin.v * 0.5 + st.u.y + sc * 1.2, rx = 0.35 + Math.sin(t * 0.3) * 0.1 * A + st.u.x;
-      st.glow([0, 0, 0], 3.4 + Math.sin(t * 1.4) * 0.15 * A, PAL.blue, 0.22); st.glow([0, 0, 0], 1.5, PAL.cyan, 0.3 + (pulse >= 0 ? 0.3 * (1 - pulse) : 0));
-      const w = st.tf({ ry, rx, s: 1.25 + burst * 0.12 });
-      const V = ico.v.map(w);
-      for (const [a, b] of ico.e) st.line(V[a], V[b], PAL.cyan, 0.55 * st.fog(st.cam(V[a])[2]), 1.3);
-      for (const p of V) st.glowDot(p, 0.045, PAL.cyan, 0.9);
-      const wi = st.tf({ ry: -ry * 1.6, rx: -rx, s: 0.62 }), VI = ico.v.map(wi);
-      for (const [a, b] of ico.e) st.line(VI[a], VI[b], PAL.blue, 0.4, 1);
-      [[2.0, 0.5, 0.15], [2.6, -0.7, -0.1], [3.2, 1.1, 0.06]].forEach(([R, tl, sp], i) => {
-        const wr = st.tf({ rx: tl + 1.1, rz: tl, ry: t * sp * A * (i % 2 ? -1 : 1) + st.u.y * 0.5 }), P = circle(R, 56).map(wr);
-        for (let k = 0; k < P.length - 1; k++) { const z = st.cam(P[k])[2]; st.line(P[k], P[k + 1], i === 1 ? PAL.blue : PAL.cyan, 0.5 * st.fog(z), 1.1); }
-        if (pulse >= 0) { const wp = st.tf({ rx: tl + 1.1, rz: tl }); const Q = circle(R * (0.3 + pulse * 1.0), 40).map(wp); for (let k = 0; k < Q.length - 1; k++) st.line(Q[k], Q[k + 1], PAL.cyan, 0.7 * (1 - pulse), 1.6); }
-      });
-      const wp = st.tf({ ry: -t * 0.04 * A + st.u.y * 0.4 });
-      for (const q of parts) { const p = wp(q.p.map((c) => c * (1 + burst * 0.35))), P = st.cam(p); st.dot(p, q.sz * 1.2, PAL.text, st.fog(P[2]) * (0.35 + 0.35 * Math.sin(t * 1.3 + q.ph) * A + 0.2)); }
-      hits = [];
-      const wn = st.tf({ ry: ry * 0.35 + st.u.y * 0.5 });
-      let hv = null;
-      for (const n of projs) {
-        const a = n.ph + t * n.sp * A, p = wn([n.R * Math.cos(a), Math.sin(a * 1.3) * n.tilt, n.R * Math.sin(a)]);
-        const P = st.cam(p), k = P[3] / (st.f / st.dist), isH = hover === n.slug;
-        st.line([0, 0, 0], p, PAL.cyan, 0.14 * st.fog(P[2]), 1);
-        st.glowDot(p, isH ? 0.11 : 0.08, PAL.cyan, 0.95 * st.fog(P[2], 0.5, 1.2));
-        const fr = st.fog(P[2], 0.6, 0.9);
-        st.text(n.name + (n.pending ? ' (soon)' : ''), [p[0], p[1] - 0.3, p[2]], isH ? 0.24 : 0.2, PAL.text, isH ? 1 : 0.35 + 0.6 * fr);
-        const h = { x: P[0], y: P[1], r: 0.1 * st.f / P[2] + 8, z: P[2], href: n.href, slug: n.slug }; hits.push(h);
-        if (Math.hypot(h.x - st.ptr.sx, h.y - st.ptr.sy) < h.r + 12 && (!hv || h.z < hv.z)) hv = h;
-      }
-      hover = hv?.slug || null; st.c.style.cursor = hv ? 'pointer' : st.ptr.down ? 'grabbing' : 'grab'; st.flush();
-    });
-  },
-
   // ---- TerraView: a small globe ----
   globe(st) {
     const cities = [['Alexandria', 31.2, 29.9], ['London', 51.5, -0.1], ['New York', 40.7, -74], ['Tokyo', 35.7, 139.7], ['Sydney', -33.9, 151.2], ['São Paulo', -23.5, -46.6]];
@@ -252,20 +203,7 @@ export const scenes = {
   },
 };
 
-// ---- Site background: sparse depth layers + floor grid. Always subtle. ----
-export function background(canvas) {
-  const st = new Stage(canvas, { dist: 6, dpr: 1 }), N = st.lite ? 26 : 60, pts = Array.from({ length: N }, () => [(Math.random() - 0.5) * 14, (Math.random() - 0.5) * 8, Math.random() * 9 - 3]);
-  st.run((t, dt) => {
-    st.begin(); const A = st.amb, sc = scrollY * 0.0006; st.yaw += (st.ptr.x * 0.16 * A - st.yaw) * 0.04; st.pitch += (st.ptr.y * 0.08 * A - st.pitch) * 0.04;
-    const w = st.tf({ ry: sc * A, ty: -sc * 2 * A });
-    for (const p of pts) { const q = w([p[0], p[1], ((p[2] + t * 0.12 * A + 3) % 9) - 3]), P = st.cam(q); if (P[2] > 0.8) st.dot(q, 0.011, PAL.cyan, 0.5 * st.fog(P[2], 0.3, 1.8)); }
-    for (let i = -8; i <= 8; i++) { const a = w([i * 1.1, -3.2, -2]), b = w([i * 1.1, -3.2, 10]); st.line(a, b, PAL.blue, 0.07, 1); }
-    for (let k = 0; k < 8; k++) { const z = ((k + t * 0.1 * A) % 8) * 1.3 - 1; st.line(w([-9, -3.2, z]), w([9, -3.2, z]), PAL.blue, 0.06, 1); }
-    st.flush();
-  });
-}
-
-const FOV = { hero: 0.92, globe: 2.5, lock: 1.65, link: 1.08, desk: 1.15, frame: 1.2, atlas: 1.15, portal: 1.7, playground: 2.0, interests: 1.75 };
+const FOV = { globe: 2.5, lock: 1.65, link: 1.08, desk: 1.15, frame: 1.2, atlas: 1.15, portal: 1.7, playground: 2.0, interests: 1.75 };
 export function mountScenes() {
   for (const c of document.querySelectorAll('canvas[data-scene]')) {
     const f = scenes[c.dataset.scene]; if (!f) continue;
