@@ -11,7 +11,7 @@ The whole look is driven by tokens at the top of `src/styles.css` (`:root`: `--b
 ## What is where
 - `build.mjs` generates every page. `src/data.mjs` holds project data. `src/styles.css` is the original base; `src/extra.css` is the interaction layer. Both are bundled into `dist/styles.css`.
 - `public/js/` holds the site scripts (ES modules, same-origin only, no libraries): `gfx.js` is a small Canvas 3D engine, `scenes.js` the 3D scenes (globe, lock, OmarLink, desk, Day Frame, network, interests orbit, 404 portal, Lab object), `arcade.js` the five games, `lab.js` the experiments, `pages.js` the Random, About, Contact and calculator behaviour, `core.js` the shared behaviour (menu, cursor, terminal, Easter eggs, motion switch).
-- `src/games.mjs` is the single source for Omar's eight existing games (URL, category, description, visual, what each page shows). Cards, the details dialog, the terminal, Random and the audit all read from it, so a URL lives in exactly one place.
+- `src/games.mjs` is the single source for Omar's seven existing games (URL, category, description, visual, what each page shows). Cards, the details dialog, the terminal, Random and the audit all read from it, so a URL lives in exactly one place.
 - `/interests/` and `/learning/` are built from the `INTERESTS` and `LEARN` arrays in `build.mjs`. Add an entry there and the cards, orbit, map and details all update.
 - Pages: `/arcade/` (now the Game Archive), `/interests/`, `/learning/`, `/lab/`, `/random/` and `/projects/omarlink/` are new or expanded. Every original route and URL is unchanged.
 - Pages work without JavaScript: all content is plain HTML. The 3D scenes, games and lab are enhancements.

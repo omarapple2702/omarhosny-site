@@ -27,7 +27,6 @@ Social links, About details, all six project links, privacy/terms/cookies pages.
 - **Game descriptions only say what each page shows** (inspected 3 October 2026, text only):
   - *2048 Omar* is titled **2048 Drop**: you drop and merge tiles, you don't slide them. The card says so.
   - *Neon Rush* and *Survival Dodging Game* both have the generic page title "Mini Game"; I could only confirm a score, a Play / Play Again button and a Ready? screen, so the cards say no more than that. Send me a sentence about how each plays and I will add it.
-  - *Omar Quiz* is titled **Omar's Ultimate Quiz**. I could only see its Quiz Finished screen and Restart Quiz button, so the site does not say what it asks about. Tell me the topics and I will add them (and a better Learning entry).
   - *Flappy Bird Omar*: only the sound button was visible.
 - Visuals on the game cards are original illustrations, not screenshots and not the games' own artwork.
 - Privacy and Terms now say the site links to "project and game websites". Those sites are separate and follow their own policies.

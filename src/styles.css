@@ -318,7 +318,7 @@ a:hover { color: var(--accent); text-decoration-color: currentColor; }
   .bento > li:nth-child(n) { grid-column: auto; }
   .creator-art { max-width: 22rem; }
 }
-@media (max-width: 60rem) {
+@media (max-width: 70rem) { /* nine links need more room than eight did */
   .pill { padding-left: 1.1rem; }
   .js .menu-btn { display: inline-flex; }
   .js #main-nav { display: none; position: absolute; left: 0; right: 0; top: calc(100% + 0.5rem); padding: 0.75rem; border-radius: 28px; border: 1px solid var(--line-strong); background: rgba(8, 15, 28, 0.96); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); box-shadow: 0 24px 50px -16px #000; }

@@ -57,7 +57,7 @@ function buildTerm() {
   const line = (txt, cls = '') => { const p = document.createElement('p'); if (cls) p.className = cls; if (txt instanceof Node) p.append(txt); else p.textContent = txt; out.append(p); out.scrollTop = out.scrollHeight; };
   const link = (href, label) => { const a = document.createElement('a'); a.href = href; a.textContent = label; if (/^https?:/.test(href)) { a.target = '_blank'; a.rel = 'noopener noreferrer'; const n = document.createElement('span'); n.className = 'sr-only'; n.textContent = ' (opens in a new tab)'; a.append(n); } return a; };
   const row = (a, txt) => { const f = document.createDocumentFragment(); f.append(a, document.createTextNode(txt ? '  ' + txt : '')); line(f); };
-  const pages = { projects: '/projects/', arcade: '/arcade/', lab: '/lab/', about: '/about/', contact: '/contact/', random: '/random/', interests: '/interests/', learning: '/learning/', home: '/' };
+  const pages = { projects: '/projects/', arcade: '/arcade/', lab: '/lab/', omarverse: '/omarverse/', about: '/about/', contact: '/contact/', random: '/random/', interests: '/interests/', learning: '/learning/', home: '/' };
   const C = {
     help: () => { line('Commands: help, projects, interests, learning, arcade, lab, about, contact, random, status, clear'); line('Also: open <page>, theme <default|ember|violet|mono>, motion, exit'); },
     projects: () => { (S.projects || []).forEach((p) => row(link(p.href || '/projects/', p.name), p.statusLabel + (p.summary ? ' — ' + p.summary : ''))); },
@@ -105,5 +105,40 @@ addEventListener('keydown', (e) => { const t = e.target; if (e.key === '`' && !e
 const page = document.body.dataset.page;
 if ($('canvas[data-scene]')) import('./scenes.js').then((m) => m.mountScenes());
 if ($('[data-buddy]')) import('./hero.js').then((m) => m.init());
-const mods = { learning: 'pages.js', arcade: 'arcade.js', lab: 'lab.js', random: 'pages.js', about: 'pages.js', contact: 'pages.js', 'projects-omar-calculator': 'pages.js', notfound: 'pages.js' };
+const mods = { omarverse: 'omarverse.js', learning: 'pages.js', arcade: 'arcade.js', lab: 'lab.js', random: 'pages.js', about: 'pages.js', contact: 'pages.js', 'projects-omar-calculator': 'pages.js', notfound: 'pages.js' };
 if (mods[page]) import('./' + mods[page]).then((m) => m.init?.(page));
+
+// ---- Omarverse entry: respond instantly, warm the world up in the background, navigate when it is ready ----
+(() => {
+  if (page === 'omarverse') return;
+  const links = $$('a[href="/omarverse/"]'); if (!links.length) return;
+  let warm = null;
+  // The CSP has no connect-src, so no fetch(): warm the stylesheet through a non-blocking <link> and the scripts through import().
+  const css = () => new Promise((res) => { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = '/omarverse.css'; l.media = 'print'; l.onload = l.onerror = () => res(); document.head.append(l); });
+  const preload = () => warm ??= Promise.allSettled([css(), import('./omarverse.js'), import('./ov/hub.js'), import('./ov/areas.js'), document.fonts?.ready]);
+  for (const a of links) for (const ev of ['pointerenter', 'focus', 'touchstart']) a.addEventListener(ev, preload, { once: true, passive: true });
+  let busy = false;
+  addEventListener('pageshow', (e) => { if (e.persisted) { busy = false; $('.ovx')?.remove(); root.classList.remove('ovx-lock'); } });
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest?.('a[href="/omarverse/"]'); if (!a || e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target) return;
+    e.preventDefault(); if (busy) return; busy = true; preload();
+    const r = a.getBoundingClientRect(), x = e.clientX || r.left + r.width / 2, y = e.clientY || r.top + r.height / 2, t0 = performance.now();
+    const ov = document.createElement('div'); ov.className = 'ovx'; ov.setAttribute('aria-hidden', 'true');
+    ov.innerHTML = '<i class="ovx-veil"></i><i class="ovx-glow"></i><i class="ovx-glow2"></i><i class="ovx-ring"></i><i class="ovx-ring"></i><i class="ovx-vig"></i><div class="ovx-core"><svg viewBox="0 0 120 120" focusable="false"><circle cx="60" cy="60" r="54"/></svg><p class="ovx-word">Omarverse</p><p class="ovx-msg"></p></div>';
+    ov.style.setProperty('--x', x + 'px'); ov.style.setProperty('--y', y + 'px'); ov.style.setProperty('--dx', innerWidth / 2 - x + 'px'); ov.style.setProperty('--dy', innerHeight / 2 - y + 'px');
+    document.body.append(ov); root.classList.add('ovx-lock'); announce('Entering Omarverse');
+    requestAnimationFrame(() => ov.classList.add('is-on'));
+    try { sessionStorage.setItem('ovx', '1'); } catch {}
+    const minMs = motion.off ? 150 : 1500;
+    Promise.race([preload(), new Promise((r) => setTimeout(r, 2500))]).then(() => new Promise((r) => setTimeout(r, Math.max(0, minMs - (performance.now() - t0))))).then(() => { location.href = '/omarverse/'; });
+  });
+})();
+
+// ---- Homepage reveal: show the hero as soon as type and the first frame are ready. Nothing is delayed on purpose. ----
+(() => {
+  if (page !== 'home') return;
+  const done = () => { root.classList.add('hv-go'); setTimeout(() => $('.hv-skel')?.remove(), 1500); };
+  if (motion.off) return done();
+  const t0 = performance.now(), fonts = document.fonts?.ready || Promise.resolve();
+  Promise.race([fonts, new Promise((r) => setTimeout(r, 1200))]).catch(() => {}).then(() => requestAnimationFrame(() => { if (performance.now() < 300) root.classList.add('hv-fast'); done(); }));
+})();

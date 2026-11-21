@@ -16,6 +16,7 @@ const chev = '<svg class="chev" viewBox="0 0 16 16" fill="none" aria-hidden="tru
 
 const NAV = [
   ['/projects/', 'Projects'],
+  ['/omarverse/', 'Omarverse'],
   ['/interests/', 'Interests'],
   ['/learning/', 'Learning'],
   ['/arcade/', 'Arcade'],
@@ -26,9 +27,9 @@ const NAV = [
 const NAV_CTA = ['/contact/', 'Contact'];
 
 const pages = [];
-function page(path, { title, description, body, schema = [], crumbs = [], noindex = false, section = '' }) {
+function page(path, { title, description, body, schema = [], crumbs = [], noindex = false, section = '', css = '' }) {
   const id = path === '/' ? 'home' : path === '/404.html' ? 'notfound' : path.split('/').filter(Boolean).join('-');
-  pages.push({ path, title, description, body, schema, crumbs, noindex, section, id });
+  pages.push({ path, title, description, body, schema, crumbs, noindex, section, id, css });
 }
 
 const ext = '<svg class="ext" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11l6-6M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -104,7 +105,6 @@ const EXTART = {
   tunnel: tunnelSVG, hazards: hazardSVG, chess: chessSVG,
   sky: A('<rect x="0" y="0" width="160" height="90" fill="#0d2a55" fill-opacity=".55" stroke="none"/><path d="M14 22q6-8 14-3q6-6 13 2" stroke-opacity=".4"/><path d="M110 16q6-8 14-3q6-6 13 2" stroke-opacity=".4"/><g><rect x="92" y="0" width="20" height="30" rx="2" fill="#0b1830" stroke-opacity=".7"/><rect x="88" y="26" width="28" height="9" rx="2" fill="#0b1830" stroke-opacity=".7"/><rect x="88" y="58" width="28" height="9" rx="2" fill="#0b1830" stroke-opacity=".7"/><rect x="92" y="64" width="20" height="26" rx="2" fill="#0b1830" stroke-opacity=".7"/></g><g class="art-float"><circle class="a" cx="46" cy="46" r="9" fill="currentColor" fill-opacity=".9" stroke="none"/><circle cx="49" cy="43" r="2" fill="#06101c" stroke="none"/><path d="M54 47l7 2-7 3z" fill="#e8eef7" stroke="none"/><path d="M38 48q4 6 10 2" stroke="#06101c" stroke-opacity=".6"/></g>', '0 0 160 90'),
   dodge: A('<g class="art-dodge"><rect class="a" x="52" y="32" width="56" height="26" rx="13" fill="currentColor" fill-opacity=".9" stroke="none"/><text x="80" y="49" text-anchor="middle" font-size="11" font-weight="700" fill="#06101c" stroke="none" font-family="Inter, sans-serif">CLICK</text></g><path class="art-line" d="M20 80Q40 70 58 62" stroke-opacity=".6"/><path d="M58 62l9 3-4 3 4 6-3 2-4-6-4 3z" fill="#e8eef7" stroke="none"/>', '0 0 160 90'),
-  quiz: A('<rect x="44" y="16" width="76" height="52" rx="8" fill="#0b1830" stroke-opacity=".3" transform="rotate(-8 80 45)"/><rect x="40" y="14" width="76" height="52" rx="8" fill="#0b1830" stroke-opacity=".5" transform="rotate(-3 80 45)"/><g class="art-float"><rect x="42" y="12" width="76" height="52" rx="8" fill="#0d1d38"/><text x="80" y="50" text-anchor="middle" font-size="34" font-weight="700" class="a" fill="currentColor" stroke="none" font-family="Bricolage Grotesque, sans-serif">?</text></g><g class="art-line" stroke-opacity=".35"><path d="M122 20l22-8M122 62l24 10M40 40L14 40"/></g><circle class="a art-pulse" cx="146" cy="11" r="3.2" fill="currentColor"/><circle class="a art-pulse" cx="148" cy="73" r="3.2" fill="currentColor"/><circle class="a art-pulse" cx="12" cy="40" r="3.2" fill="currentColor"/>', '0 0 160 90'),
 };
 const INTART = {
   tennis: A('<ellipse cx="56" cy="46" rx="18" ry="22" transform="rotate(-25 56 46)" fill="#0b1830"/><path d="M42 36q14 10 28 8M40 50q14 8 28 6" stroke-opacity=".45" transform="rotate(-25 56 46) translate(2 -2)"/><path d="M68 66l16 18" stroke-width="3"/><g class="art-ball"><circle class="a" cx="112" cy="40" r="9" fill="currentColor" fill-opacity=".9" stroke="none"/><path d="M104 36q8 4 16 0" stroke="#06101c" stroke-opacity=".5"/></g><path d="M20 82h120" stroke-opacity=".35"/>', '0 0 160 90'),
@@ -158,9 +158,9 @@ const siteData = {
   socials: SOCIALS.map((s) => ({ name: s.name, handle: s.handle, url: s.url })),
   about: ['Egyptian software developer and independent creator based in Alexandria, Egypt.', 'Designs and builds websites, software applications and AI-powered tools.'],
   games: ['Reaction test', 'Target hunt', 'Memory grid', 'Avoid', 'Logic challenge'],
-  extGames: EXTERNAL_GAMES.map((g) => ({ id: g.id, name: g.name, url: g.url, host: hostOf(g.url), category: g.quiz ? 'Quiz project' : g.category, summary: g.summary, shows: g.shows, siteTitle: g.siteTitle, quiz: !!g.quiz, visual: g.visual })),
+  extGames: EXTERNAL_GAMES.map((g) => ({ id: g.id, name: g.name, url: g.url, host: hostOf(g.url), category: g.category, summary: g.summary, shows: g.shows, siteTitle: g.siteTitle, visual: g.visual })),
   interests: ['Tennis', 'Swimming (5 stars)', 'Building websites and software', 'Making games', 'Maths'],
-  learning: ['Certificates: Cambridge Lower Secondary, Cambridge Primary, UCMAS', 'Swift and SwiftUI (WeLock)', 'Websites and web apps', 'Maths (Omar Calc)', 'Study planning (Day Frame)', 'Omar Quiz'],
+  learning: ['Certificates: Cambridge Lower Secondary, Cambridge Primary, UCMAS', 'Swift and SwiftUI (WeLock)', 'Websites and web apps', 'Maths (Omar Calc)', 'Study planning (Day Frame)'],
   lab: ['Particle playground', 'Gravity playground', 'Colour lab', 'Pointer physics', '3D playground'],
 };
 
@@ -179,6 +179,7 @@ page('/', {
   description: 'The personal website of Omar Hosny: websites and software he has built, including Omar Calc, Day Frame, WeLock, TerraView and Atlas-AI, plus an arcade and a lab to play in.',
   section: 'home',
   body: `
+<div class="hv-skel wrap" aria-hidden="true"><i class="sk sk-eye"></i><i class="sk sk-h1"></i><i class="sk sk-l1"></i><i class="sk sk-l2"></i><span class="sk-row"><i class="sk sk-btn"></i><i class="sk sk-btn"></i></span><i class="sk sk-stage"></i></div>
 <section class="hero wrap">
   <p class="eyebrow"><span class="ping" aria-hidden="true"></span>Websites, software and projects</p>
   <h1>Omar <span class="hl">Hosny</span></h1>
@@ -203,7 +204,7 @@ ${marquee()}
 </section>
 <section class="section wrap" aria-labelledby="play-h">
   <div class="section-head"><h2 id="play-h">Play</h2><p>Real games and small experiments. Nothing is tracked and scores stay on your device.</p></div>
-  <ul class="playband">${tile('/arcade/', 'Arcade', 'Five games to play here, and eight more I have built on their own sites.', 'arcade')}${tile('/lab/', 'Lab', 'Particles, gravity, colours, spring physics and a 3D object to rotate.', 'lab')}${tile('/random/', 'Random', 'A random project, challenge, colour or site mode.', 'random')}</ul>
+  <ul class="playband">${tile('/arcade/', 'Arcade', 'Five games to play here, and seven more I have built on their own sites.', 'arcade')}${tile('/lab/', 'Lab', 'Particles, gravity, colours, spring physics and a 3D object to rotate.', 'lab')}${tile('/random/', 'Random', 'A random project, challenge, colour or site mode.', 'random')}</ul>
 </section>
 <section class="section wrap" aria-labelledby="more-h">
   <div class="section-head"><h2 id="more-h">Elsewhere on this site</h2></div>
@@ -240,10 +241,9 @@ page('/projects/', {
   <ul class="cards">${LIVE.map(card).join('')}</ul>
 </section>
 <section class="section wrap" aria-labelledby="gq-h">
-  <div class="section-head"><h2 id="gq-h">Games and quizzes</h2><p>Everything playable lives in the Game Archive. My quiz project is here too.</p></div>
+  <div class="section-head"><h2 id="gq-h">Games</h2><p>Everything playable lives in the Game Archive.</p></div>
   <ul class="cards">
-    <li><a class="card tilt rv" href="/arcade/"><div class="card-art">${GAMEART.target}</div><div class="card-body"><span class="card-name">Game Archive</span><span class="card-sum">Five games on this site and eight on their own websites.</span><span class="row-status">${dot('live')}Live</span></div></a></li>
-    <li><a class="card tilt rv" href="${esc(EXTERNAL_GAMES.find((g) => g.quiz).url)}" target="_blank" rel="noopener noreferrer"><div class="card-art">${EXTART.quiz}</div><div class="card-body"><span class="card-name">${esc(EXTERNAL_GAMES.find((g) => g.quiz).name)}</span><span class="card-sum">${esc(EXTERNAL_GAMES.find((g) => g.quiz).summary)}</span><span class="row-status">${dot('live')}Live, opens on its own site${ext}${NEWTAB}</span></div></a></li>
+    <li><a class="card tilt rv" href="/arcade/"><div class="card-art">${GAMEART.target}</div><div class="card-body"><span class="card-name">Game Archive</span><span class="card-sum">Five games on this site and seven on their own websites.</span><span class="row-status">${dot('live')}Live</span></div></a></li>
   </ul>
 </section>
 <section class="section wrap" aria-labelledby="soon-h">
@@ -387,18 +387,18 @@ page('/contact/', {
 const GAMES5 = [['reaction', 'Reaction test', 'How fast can you react?'], ['target', 'Target hunt', 'Thirty seconds of shrinking targets.'], ['memory', 'Memory grid', 'Repeat the pattern. Levels get longer.'], ['avoid', 'Avoid', 'Dodge the blocks coming down the track.'], ['logic', 'Logic challenge', 'Ten generated puzzles against the clock.']];
 const bestLine = { reaction: ['Best', 'reaction'], target: ['Best score', 'target'], memory: ['Best score', 'memory'], avoid: ['Best score', 'avoid'], logic: ['Best score', 'logic'] };
 const playLink = (g, cls = 'btn btn-primary') => `<a class="${cls}" href="${esc(g.url)}" target="_blank" rel="noopener noreferrer">Play ${esc(g.name)}${ext}${NEWTAB}</a>`;
-const extCard = (g) => `<li${g.quiz ? ' class="ext-wide"' : ''}><article class="card tilt ext-card${g.quiz ? ' ext-quiz' : ''} rv" data-ext-game="${g.id}" aria-labelledby="eg-${g.id}">
+const extCard = (g) => `<li><article class="card tilt ext-card rv" data-ext-game="${g.id}" aria-labelledby="eg-${g.id}">
   <div class="card-art" aria-hidden="true">${EXTART[g.visual] || ''}</div>
-  <div class="card-body"><span class="chip">${g.quiz ? 'Quiz project' : esc(g.category)}</span><h3 class="card-name" id="eg-${g.id}">${esc(g.name)}</h3><p class="card-sum">${esc(g.summary)}</p><p class="ext-host"><span class="sr-only">Hosted at </span>${esc(hostOf(g.url))}</p>
+  <div class="card-body"><span class="chip">${esc(g.category)}</span><h3 class="card-name" id="eg-${g.id}">${esc(g.name)}</h3><p class="card-sum">${esc(g.summary)}</p><p class="ext-host"><span class="sr-only">Hosted at </span>${esc(hostOf(g.url))}</p>
   <div class="ext-actions">${playLink(g)}<button type="button" class="btn details" aria-haspopup="dialog" aria-label="Details: ${esc(g.name)}">Details</button></div></div>
 </article></li>`;
 page('/arcade/', {
   title: 'Arcade and Game Archive — Omar Hosny',
-  description: 'Omar Hosny’s Game Archive: five games to play on this site, plus Omar Click, 2048 Omar, Neon Rush, Survival Dodging, Chess Omar, Flappy Bird Omar, Click the Button and Omar Quiz.',
+  description: 'Omar Hosny’s Game Archive: five games to play on this site, plus Omar Click, 2048 Omar, Neon Rush, Survival Dodging, Chess Omar, Flappy Bird Omar and Click the Button.',
   section: 'arcade',
   crumbs: [['Arcade', '/arcade/']],
   body: `
-<header class="page-head wrap"><h1>Arcade</h1><p class="lede">The Omar Game Archive: five games to play right here, and eight more I have built that live on their own sites.</p>
+<header class="page-head wrap"><h1>Arcade</h1><p class="lede">The Omar Game Archive: five games to play right here, and seven more I have built that live on their own sites.</p>
   <nav aria-label="On this page" class="jump"><a href="#play-here">Play here</a><a href="#more-games">More Omar games</a><a href="#local-scores">Local scores</a></nav></header>
 <section class="wrap" aria-labelledby="pick-h">
   <div class="section-head"><h2 id="pick-h">Play here</h2><p>Five games built into this site. Scores are saved only in this browser.</p></div>
@@ -409,14 +409,14 @@ page('/arcade/', {
 </section>
 <section class="wrap section" aria-labelledby="more-h2">
   <span id="more-games" class="anchor"></span>
-  <div class="section-head"><h2 id="more-h2">More Omar games</h2><p>Eight projects I made earlier. Each one opens on its own website in a new tab. They are not hosted here, and each site has its own rules for any data it keeps.</p></div>
-  <ul class="cards ext-grid">${EXTERNAL_GAMES.filter((g) => g.quiz).map(extCard).join('')}${EXTERNAL_GAMES.filter((g) => !g.quiz).map(extCard).join('')}</ul>
+  <div class="section-head"><h2 id="more-h2">More Omar games</h2><p>Seven projects I made earlier. Each one opens on its own website in a new tab. They are not hosted here, and each site has its own rules for any data it keeps.</p></div>
+  <ul class="cards ext-grid">${EXTERNAL_GAMES.map(extCard).join('')}</ul>
 </section>
 <section class="wrap section" aria-labelledby="scores-h">
   <span id="local-scores" class="anchor"></span>
   <div class="scoreboard"><h2 id="scores-h">Local scores</h2>
     <dl><div><dt>Reaction best</dt><dd data-best="reaction">—</dd></div><div><dt>Reaction average (last 10)</dt><dd data-best="reaction-avg">—</dd></div><div><dt>Target hunt best</dt><dd data-best="target">—</dd></div><div><dt>Memory grid best</dt><dd data-best="memory">—</dd></div><div><dt>Avoid best</dt><dd data-best="avoid">—</dd></div><div><dt>Logic best</dt><dd data-best="logic">—</dd></div></dl>
-    <p class="hint">These are the five games on this site. They are stored in your browser’s local storage on this device and nothing is sent anywhere. The eight games above keep their own scores, if any, on their own sites.</p>
+    <p class="hint">These are the five games on this site. They are stored in your browser’s local storage on this device and nothing is sent anywhere. The seven games above keep their own scores, if any, on their own sites.</p>
     <div class="actions"><button type="button" class="btn" id="reset-scores">Reset scores</button></div>
   </div>
 </section>`,
@@ -427,7 +427,7 @@ const INTERESTS = [
   { id: 'tennis', name: 'Tennis', art: 'tennis', text: 'A sport I play.', links: [['/about/', 'See it on About']] },
   { id: 'swimming', name: 'Swimming', art: 'swimming', text: 'I swim, and I have achieved 5 stars in it.', links: [['/about/', 'See it on About']] },
   { id: 'building', name: 'Building', art: 'building', text: 'Websites and software: a calculator, a browser desktop, a personal workspace, a Mac app, an Earth explorer and a chat assistant.', links: [['/projects/', 'Browse projects']] },
-  { id: 'games', name: 'Games', art: 'games', text: 'I make games. Five run on this site and eight more live on their own websites, including a chess game and a quiz.', links: [['/arcade/', 'Open the Arcade']] },
+  { id: 'games', name: 'Games', art: 'games', text: 'I make games. Five run on this site and seven more live on their own websites, including a chess game.', links: [['/arcade/', 'Open the Arcade']] },
   { id: 'maths', name: 'Maths', art: 'maths', text: 'I built Omar Calc to solve everyday maths, linear equations and quadratic equations and to show the working. I also hold a UCMAS certificate.', links: [['/projects/omar-calculator/', 'See Omar Calc'], ['/about/', 'Certificates on About']] },
 ];
 page('/interests/', {
@@ -455,12 +455,10 @@ const LEARN = [
   { id: 'web', name: 'Websites', short: 'Websites', x: '80%', y: '74%', z: '-20px', text: 'Five websites and web apps, from a calculator to a chat assistant.', body: 'Omar Calc, OmniDesk, Day Frame, TerraView and Atlas-AI are websites or web apps I built. They open in your browser.', links: [['/projects/', 'Browse projects']] },
   { id: 'maths', name: 'Maths', short: 'Maths', x: '18%', y: '74%', z: '40px', text: 'Omar Calc solves everyday maths, linear equations and quadratic equations, and shows the working.', body: 'Omar Calc solves everyday maths, linear equations and quadratic equations, and shows the working behind each answer.', links: [['/projects/omar-calculator/', 'See Omar Calc']] },
   { id: 'study', name: 'Planning study', short: 'Study', x: '50%', y: '12%', z: '50px', text: 'Day Frame sorts a day’s tasks into Study, Projects and Life.', body: 'Day Frame is a personal workspace with tasks, a focus timer and notes. Its tasks are sorted into Study, Projects and Life.', links: [['/projects/day-frame/', 'See Day Frame']] },
-  { id: 'quiz', name: 'Omar Quiz', short: 'Quiz', x: '50%', y: '88%', z: '10px', text: 'A quiz project: Omar’s Ultimate Quiz.', body: 'Omar’s Ultimate Quiz is a quiz project I made. It has a Quiz Finished screen with a Restart Quiz button. It opens on its own website.', quiz: true },
 ];
-const quizG = EXTERNAL_GAMES.find((g) => g.quiz);
 page('/learning/', {
   title: 'Learning — Omar Hosny',
-  description: 'What Omar Hosny has learned and built with it: Cambridge and UCMAS certificates, Swift and SwiftUI, websites, maths tools, study planning and a quiz project.',
+  description: 'What Omar Hosny has learned and built with it: Cambridge and UCMAS certificates, Swift and SwiftUI, websites, maths tools, and study planning.',
   section: 'learning',
   crumbs: [['Learning', '/learning/']],
   body: `
@@ -471,7 +469,7 @@ page('/learning/', {
   <p id="const-detail" aria-live="polite">Learning, in a map: certificates I hold, and projects where I use what I know.</p>
 </section>
 <section class="wrap section" aria-labelledby="det-h"><div class="section-head"><h2 id="det-h">The details</h2><p>Open a section to read more.</p></div>
-  <div class="learn-list">${LEARN.map((l) => `<details class="learn tilt rv" id="l-${l.id}"><summary><span class="learn-name">${esc(l.name)}</span><span class="learn-sum">${esc(l.text)}</span></summary><div class="learn-body"><p>${esc(l.body)}</p>${l.quiz ? `<p>${playLink(quizG, 'btn')} <a href="/arcade/#more-games">See it in the Game Archive</a></p>` : `<p>${(l.links || []).map(([h, t]) => `<a href="${h}">${esc(t)}</a>`).join(' · ')}</p>`}</div></details>`).join('')}</div>
+  <div class="learn-list">${LEARN.map((l) => `<details class="learn tilt rv" id="l-${l.id}"><summary><span class="learn-name">${esc(l.name)}</span><span class="learn-sum">${esc(l.text)}</span></summary><div class="learn-body"><p>${esc(l.body)}</p><p>${(l.links || []).map(([h, t]) => `<a href="${h}">${esc(t)}</a>`).join(' · ')}</p></div></details>`).join('')}</div>
 </section>`,
 });
 
@@ -712,6 +710,46 @@ page('/omar-terms/', {
 `),
 });
 
+// ---------- Omarverse ----------
+// The world itself is built by public/js/omarverse.js (and public/js/ov/*). This markup is the loading gate plus a plain, readable fallback.
+const OVF = [
+  ['Curious kid', 'Quiet, mischievous, curious about everything. Dinner in Sahel around 2018, exact spot forgotten.'],
+  ['First lines', 'The idea in 2019, coding in 2022, a first small website in late 2023, then mini-games.'],
+  ['Bigger things', '2026: the bigger projects started. First big one: Atlas AI.', ['/projects/atlas-ai/', 'See Atlas AI']],
+  ['Ideal day', 'Imagined, not a routine: a sunrise cycle by the sea, tennis, food with people I like, a good conversation.'],
+  ['The fun guy', 'Playful, sarcastic, random. Lots of friends, a smaller circle I trust.'],
+  ['Through my lens', 'Phone photos: sunsets, night streets, car lights, small details. Natural, barely edited.'],
+  ['Soundtrack', 'Music almost everywhere, Arabic and English. Production and atmosphere first.'],
+  ['Somewhere new', 'Sahel, Ain El Sokhna, and Paris if I could leave tomorrow.'],
+  ['What’s next', 'More building, learning, places and people. Just Omar.'],
+];
+page('/omarverse/', {
+  title: 'Omarverse — Omar Hosny',
+  description: 'A small interactive world about Omar Hosny: curiosity, code, tennis, the sea, photos, music, travel and what’s next. Poke things.',
+  section: 'omarverse',
+  css: '/omarverse.css',
+  crumbs: [['Omarverse', '/omarverse/']],
+  body: `
+<div class="ov" data-ov>
+  <div class="ov-gate" data-ov-gate role="status" aria-live="polite">
+    <canvas class="ov-gate-fx" data-ov-gate-fx aria-hidden="true"></canvas>
+    <i class="ov-gate-vig" aria-hidden="true"></i>
+    <div class="ov-gate-core">
+      <svg class="ov-gate-ring" viewBox="0 0 120 120" aria-hidden="true" focusable="false"><circle class="bg" cx="60" cy="60" r="54"/><circle class="fg" data-ov-prog cx="60" cy="60" r="54" pathLength="100"/></svg>
+      <p class="ov-gate-word">Omarverse</p>
+    </div>
+    <p class="ov-gate-msg" data-ov-gate-msg>Entering…</p>
+  </div>
+  <section class="ov-world" data-ov-world aria-label="Omarverse: nine places to explore"></section>
+  <section class="ov-fallback wrap" aria-labelledby="ovf-h">
+    <h1 id="ovf-h">Omar<span class="hl">verse</span></h1>
+    <p class="lede">An interactive world about me. It needs JavaScript, so here is the short version.</p>
+    <ul class="ov-fb-list">${OVF.map(([n, t, l]) => `<li><h2>${esc(n)}</h2><p>${esc(t)}</p>${l ? `<p><a href="${l[0]}">${esc(l[1])}</a></p>` : ''}</li>`).join('')}</ul>
+    <p class="ov-fb-end">This is a snapshot, not the whole picture. There is a lot more ahead.</p>
+  </section>
+</div>`,
+});
+
 // ---------- Layout ----------
 function layout(p) {
   const url = abs(p.path === '/404.html' ? '/' : p.path);
@@ -732,7 +770,7 @@ function layout(p) {
   } : null;
   const graph = [...(p.path === '/' ? [person, website] : []), ...p.schema, ...(crumbs ? [crumbs] : [])];
   const navLink = ([href, label], cls = '') => `<li${cls ? ` class="${cls}"` : ''}><a href="${href}"${p.section && href === `/${p.section}/` ? ' aria-current="page"' : ''}>${label}</a></li>`;
-  const nav = NAV.map((n) => navLink(n)).join('') + navLink(NAV_CTA, 'nav-cta');
+  const nav = NAV.map((n) => navLink(n, n[0] === '/omarverse/' ? 'nav-ov' : '')).join('') + navLink(NAV_CTA, 'nav-cta');
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -742,7 +780,7 @@ function layout(p) {
 <meta name="description" content="${esc(p.description)}">
 <link rel="canonical" href="${url}">
 <meta name="robots" content="${p.noindex ? 'noindex' : 'index,follow,max-image-preview:large'}">
-<meta name="theme-color" content="#050a13">
+<meta name="theme-color" content="${p.section === 'omarverse' ? '#080B14' : '#050a13'}">
 <meta name="color-scheme" content="dark">
 <meta name="author" content="${SITE.name}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -750,6 +788,7 @@ function layout(p) {
 <link rel="preload" href="/fonts/inter-latin-Regular.woff" as="font" type="font/woff" crossorigin>
 <link rel="preload" href="/fonts/inter-latin-SemiBold.woff" as="font" type="font/woff" crossorigin>
 <link rel="stylesheet" href="/styles.css">
+${p.css ? `<link rel="stylesheet" href="${p.css}">` : ''}
 <meta property="og:type" content="${p.path === '/' ? 'website' : 'article'}">
 <meta property="og:site_name" content="${SITE.name}">
 <meta property="og:title" content="${esc(p.title)}">
@@ -777,7 +816,7 @@ ${graph.length ? `<script type="application/ld+json">${JSON.stringify(graph.leng
 <footer class="site-footer">
   <div class="wrap foot">
     <div><p translate="no"><strong>Omar Hosny</strong></p><p>Websites, software and projects.</p><p class="foot-note">Created by <a href="${SITE.url}/" translate="no">Omar Hosny</a>.</p><p class="foot-note">Press <kbd class="term-key">&#96;</kbd> for a terminal. There are a few other secrets.</p></div>
-    <nav aria-labelledby="f-site"><h2 id="f-site">Site</h2><ul><li><a href="/">Home</a></li><li><a href="/projects/">Projects</a></li><li><a href="/interests/">Interests</a></li><li><a href="/learning/">Learning</a></li><li><a href="/arcade/">Arcade</a></li><li><a href="/lab/">Lab</a></li><li><a href="/random/">Random</a></li><li><a href="/about/">About</a></li><li><a href="/contact/">Contact</a></li></ul></nav>
+    <nav aria-labelledby="f-site"><h2 id="f-site">Site</h2><ul><li><a href="/">Home</a></li><li><a href="/projects/">Projects</a></li><li><a href="/omarverse/">Omarverse</a></li><li><a href="/interests/">Interests</a></li><li><a href="/learning/">Learning</a></li><li><a href="/arcade/">Arcade</a></li><li><a href="/lab/">Lab</a></li><li><a href="/random/">Random</a></li><li><a href="/about/">About</a></li><li><a href="/contact/">Contact</a></li></ul></nav>
     <nav aria-labelledby="f-proj"><h2 id="f-proj">Projects</h2><ul>${LIVE.map((x) => `<li><a href="/projects/${x.slug}/">${esc(x.name)}</a></li>`).join('')}<li><a href="/projects/omarlink/">OmarLink (soon)</a></li></ul></nav>
     <div><h2>Email</h2><ul><li><span class="mail-label">Contact Omar</span><a href="mailto:${SITE.email}">${SITE.email}</a></li><li><span class="mail-label">Site support and updates</span><a href="mailto:${SITE.projectEmail}">${SITE.projectEmail}</a></li></ul></div>
   </div>
@@ -796,6 +835,7 @@ await rm(OUT, { recursive: true, force: true });
 await mkdir(OUT, { recursive: true });
 await cp('public', OUT, { recursive: true });
 await writeFile(join(OUT, 'styles.css'), (await readFile('src/styles.css', 'utf8')) + '\n' + (await readFile('src/extra.css', 'utf8')));
+await writeFile(join(OUT, 'omarverse.css'), await readFile('src/omarverse.css', 'utf8'));
 
 for (const p of pages) {
   const file = p.path.endsWith('/') ? join(OUT, p.path, 'index.html') : join(OUT, p.path);

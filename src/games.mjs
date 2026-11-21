@@ -44,11 +44,5 @@ export const EXTERNAL_GAMES = [
     summary: 'Get 10 clicks. The button gets away from you fast, and on desktop it dodges your cursor once you are a few clicks in.',
     shows: ['A clicks counter out of 10', 'A best score', 'A Play Again button'],
   },
-  {
-    id: 'omar-quiz', name: 'Omar Quiz', url: 'https://omargame.vercel.app/', category: 'Quiz', visual: 'quiz', status: 'Live', external: true, quiz: true,
-    siteTitle: 'Omar’s Ultimate Quiz',
-    summary: 'My quiz project, Omar’s Ultimate Quiz. It has a Quiz Finished screen with a Restart Quiz button.',
-    shows: ['A Quiz Finished screen', 'A Restart Quiz button'],
-  },
 ];
 export const hostOf = (u) => new URL(u).host;

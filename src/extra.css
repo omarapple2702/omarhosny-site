@@ -185,9 +185,7 @@ svg .a { color: var(--cyan); }
 .jump a { display: inline-flex; align-items: center; min-height: 2.75rem; }
 .section-head p { max-width: 42rem; }
 .chip { align-self: flex-start; padding: 0.15rem 0.65rem; border-radius: 99px; border: 1px solid var(--line-strong); color: var(--muted); font-size: 0.82rem; }
-.ext-quiz .chip { color: var(--cyan); border-color: color-mix(in srgb, var(--cyan) 55%, transparent); }
 .ext-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr)); }
-.ext-wide { grid-column: 1 / -1; }
 .ext-card .card-name { margin: 0; }
 .ext-card .card-sum { margin: 0; }
 .ext-host { margin: 0; color: var(--muted); font-size: 0.88rem; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; overflow-wrap: anywhere; }
@@ -195,8 +193,6 @@ svg .a { color: var(--cyan); }
 .ext-actions .details { display: none; }
 .js .ext-actions .details { display: inline-flex; }
 .js .ext-card { cursor: pointer; }
-.ext-quiz { border-color: color-mix(in srgb, var(--cyan) 45%, var(--line-strong)); box-shadow: 0 0 0 1px color-mix(in srgb, var(--cyan) 18%, transparent), 0 20px 50px -30px var(--glow); }
-@media (min-width: 48rem) { .ext-quiz { flex-direction: row; align-items: stretch; } .ext-quiz .card-art { flex: 0 0 38%; aspect-ratio: auto; border-bottom: 0; border-right: 1px solid var(--line); } .ext-quiz .card-body { justify-content: center; padding: 1.25rem 1.5rem; } }
 .art-dodge { transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1); transform-box: fill-box; }
 .card:hover .art-dodge { transform: translate(18px, -10px); }
 .art-ball { transform-box: fill-box; }
@@ -285,3 +281,68 @@ body[data-page="about"] .cr-mono { background: linear-gradient(145deg, var(--ora
 body[data-page="about"] .facts { background: linear-gradient(90deg, var(--accent), var(--orange)) top / calc(100% - 3rem) 2px no-repeat, var(--surface); background-origin: border-box; }
 @media (max-width: 46rem) { body[data-page="about"] .const-plane::before, body[data-page="about"] .const-plane::after { display: none; } }
 @media (prefers-reduced-motion: reduce) { body[data-page="about"] .const-plane::before { animation: none; } }
+
+/* ---------- Omarverse: nav entry + cross-page entry transition ---------- */
+.nav-list .nav-ov a { position: relative; }
+.nav-list .nav-ov a::before { content: ""; display: inline-block; width: .42rem; height: .42rem; margin-right: .45rem; border-radius: 50%; background: linear-gradient(135deg, #FF793D, #FF659D); box-shadow: 0 0 8px #FF793D99; vertical-align: .08em; }
+.nav-list .nav-ov a:hover, .nav-list .nav-ov a[aria-current="page"] { color: #ff9a64; }
+html.ovx-lock { overflow: hidden; }
+/* Entry transition. Layers, back to front: navy veil, orange glow (grows from the click and drifts to the centre), pink glow, two faint light rings, navy vignette, wordmark.
+   The end state matches the Omarverse gate (omarverse.css) so the page swap is invisible. */
+.ovx { position: fixed; inset: 0; z-index: 200; pointer-events: all; overflow: hidden; display: grid; place-content: center; justify-items: center; gap: 1rem; }
+.ovx > * { pointer-events: none; }
+.ovx-veil { position: absolute; inset: 0; background: #080B14; opacity: 0; }
+.ovx-glow, .ovx-glow2 { position: absolute; left: var(--x); top: var(--y); border-radius: 50%; opacity: 0; scale: .04; mix-blend-mode: screen; }
+.ovx-glow { width: 120vmax; height: 120vmax; margin: -60vmax 0 0 -60vmax; background: radial-gradient(circle, rgba(255, 121, 61, .5) 0, rgba(255, 101, 157, .22) 24%, rgba(255, 101, 157, 0) 52%); }
+.ovx-glow2 { width: 90vmax; height: 90vmax; margin: -45vmax 0 0 -45vmax; background: radial-gradient(circle, rgba(255, 101, 157, .22) 0, rgba(120, 70, 200, .1) 30%, rgba(120, 70, 200, 0) 55%); }
+.ovx-ring { position: absolute; left: var(--x); top: var(--y); width: 6rem; height: 6rem; margin: -3rem 0 0 -3rem; border: 1px solid rgba(255, 190, 150, .5); border-radius: 50%; opacity: 0; scale: .2; }
+.ovx-vig { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, rgba(8, 11, 20, 0) 28%, rgba(8, 11, 20, .92) 96%); opacity: 0; }
+.ovx-core { position: relative; display: grid; place-items: center; gap: 1rem; opacity: 0; translate: 0 10px; }
+.ovx-core svg { width: 7rem; height: 7rem; }
+.ovx-core circle { fill: none; stroke: #ffffff1f; stroke-width: 3; }
+.ovx-word { margin: 0; font: 800 clamp(2rem, 7vw, 3.4rem)/1 var(--font-display); letter-spacing: -.02em; color: #fff4e6; text-shadow: 0 0 40px rgba(255, 121, 61, .45); }
+.ovx-msg { min-height: 1.3em; }
+.ovx.is-on .ovx-veil { animation: ovx-veil 1.1s cubic-bezier(.3, 0, .2, 1) forwards; }
+.ovx.is-on .ovx-glow { animation: ovx-glow 1.7s cubic-bezier(.25, 0, .15, 1) forwards; }
+.ovx.is-on .ovx-glow2 { animation: ovx-glow2 1.9s cubic-bezier(.25, 0, .15, 1) .18s forwards; }
+.ovx.is-on .ovx-ring { animation: ovx-ring 1.5s cubic-bezier(.2, .6, .3, 1) forwards; }
+.ovx.is-on .ovx-ring + .ovx-ring { animation-delay: .35s; }
+.ovx.is-on .ovx-vig { animation: ovx-fade 1.2s ease .1s forwards; }
+.ovx.is-on .ovx-core { animation: ovx-core .9s cubic-bezier(.2, .7, .2, 1) .75s forwards; }
+@keyframes ovx-veil { to { opacity: .94; } }
+@keyframes ovx-glow { 0% { opacity: 0; scale: .04; translate: 0 0; } 18% { opacity: .55; } 100% { opacity: 1; scale: 1; translate: var(--dx) var(--dy); } }
+@keyframes ovx-glow2 { 0% { opacity: 0; scale: .04; translate: 0 0; } 100% { opacity: 1; scale: 1; translate: var(--dx) var(--dy); } }
+@keyframes ovx-ring { 0% { opacity: 0; scale: .2; } 15% { opacity: .55; } 100% { opacity: 0; scale: 22; } }
+@keyframes ovx-fade { to { opacity: 1; } }
+@keyframes ovx-core { to { opacity: 1; translate: 0 0; } }
+html[data-motion="reduced"] .ovx-glow, html[data-motion="reduced"] .ovx-glow2, html[data-motion="reduced"] .ovx-ring { display: none; }
+html[data-motion="reduced"] .ovx.is-on .ovx-veil { animation-duration: .2s; } html[data-motion="reduced"] .ovx.is-on .ovx-core { animation-duration: .2s; animation-delay: 0s; } html[data-motion="reduced"] .ovx.is-on .ovx-vig { animation-duration: .2s; }
+@media (prefers-reduced-motion: reduce) { .ovx-glow, .ovx-glow2, .ovx-ring { display: none; } .ovx.is-on .ovx-veil, .ovx.is-on .ovx-vig, .ovx.is-on .ovx-core { animation-duration: .2s; animation-delay: 0s; } }
+
+/* ---------- Homepage reveal ----------
+   With scripting on, the hero waits for fonts and the first frame, then assembles in a short stagger. A soft skeleton only shows if the wait passes ~150 ms.
+   Opacity, translate and blur only: nothing moves the layout. Failsafe: with no script the hero reveals itself by CSS after 2 s. Never runs for reduced motion. */
+.hv-skel { display: none; }
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  body[data-page="home"] main { position: relative; }
+  body[data-page="home"] .hero > *, body[data-page="home"] .marquee-wrap { opacity: 0; animation: hv-in .85s cubic-bezier(.2, .8, .2, 1) calc(2s + var(--hv-d, 0s)) both; }
+  body[data-page="home"] .hero > :nth-child(1) { --hv-d: 0s; } body[data-page="home"] .hero > :nth-child(2) { --hv-d: .08s; } body[data-page="home"] .hero > :nth-child(3) { --hv-d: .16s; }
+  body[data-page="home"] .hero > :nth-child(4) { --hv-d: .24s; } body[data-page="home"] .hero > :nth-child(5) { --hv-d: .3s; } body[data-page="home"] .hero > :nth-child(6) { --hv-d: .4s; } body[data-page="home"] .marquee-wrap { --hv-d: .55s; }
+  html.hv-go body[data-page="home"] .hero > *, html.hv-go body[data-page="home"] .marquee-wrap { animation-delay: var(--hv-d, 0s); }
+  html.hv-fast body[data-page="home"] .hero > *, html.hv-fast body[data-page="home"] .marquee-wrap { animation-duration: .5s; animation-delay: calc(var(--hv-d, 0s) * .4); }
+  body[data-page="home"] .hl::after { animation-delay: 1.1s; }
+  .hv-skel { display: flex; flex-direction: column; align-items: center; position: absolute; top: 5.75rem; left: 0; right: 0; padding-block: clamp(1.5rem, 4vw, 3rem) 0; pointer-events: none; opacity: 0; animation: hv-sk-in .35s ease .15s forwards; transition: opacity .4s ease; }
+  html.hv-go .hv-skel { animation: none; opacity: 0; }
+  .sk { display: block; border-radius: 999px; background: linear-gradient(100deg, rgba(255, 255, 255, .05) 30%, rgba(255, 255, 255, .13) 50%, rgba(255, 255, 255, .05) 70%) 0 0 / 300% 100%; animation: hv-sh 1.4s linear infinite; }
+  .sk-eye { width: min(17rem, 70%); height: 2rem; }
+  .sk-h1 { width: min(30rem, 84%); height: clamp(3.2rem, 8.2vw, 7rem); margin-top: 1.4rem; border-radius: 18px; }
+  .sk-l1 { width: min(38rem, 92%); height: 1.1rem; margin-top: 1.6rem; } .sk-l2 { width: min(26rem, 70%); height: 1.1rem; margin-top: .7rem; }
+  .sk-row { display: flex; gap: .9rem; margin-top: 2rem; } .sk-btn { width: 10.5rem; height: 3rem; }
+  .sk-stage { width: 100%; max-width: 60rem; aspect-ratio: 2.1 / 1; margin-top: clamp(3.6rem, 6vw, 5.4rem); border-radius: 28px; }
+  @media (max-width: 46rem) { .sk-stage { aspect-ratio: 1; max-width: 26rem; } .sk-btn { width: 8.5rem; } }
+}
+@keyframes hv-in { from { opacity: 0; translate: 0 18px; filter: blur(8px); } to { opacity: 1; translate: none; filter: none; } }
+@keyframes hv-sk-in { to { opacity: 1; } }
+@keyframes hv-sh { to { background-position: -300% 0; } }
+html[data-motion="reduced"] body[data-page="home"] .hero > *, html[data-motion="reduced"] body[data-page="home"] .marquee-wrap { opacity: 1; animation: none; }
+html[data-motion="reduced"] .hv-skel { display: none; }
